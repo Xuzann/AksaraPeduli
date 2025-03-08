@@ -8,6 +8,9 @@
   <link href="./src/output.css" rel="stylesheet">
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
   <style>
    body {
             font-family: 'Inter', sans-serif;
@@ -37,60 +40,99 @@
    </div>
   </header>
   <main>
-   <section class="relative">
-    <img alt="Children holding a red banner" class="w-full h-96 object-cover" height="600" src="https://storage.googleapis.com/a1aa/image/0D8iF0x7ifolz2o4BIG38dkDVcmXB3X2KoQURwEbqrQ.jpg" width="1920"/>
-    <div class="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center text-white">
-     <h1 class="text-3xl md:text-5xl font-bold">
-      Bersama, Kita Ciptakan Generasi Emas!
-     </h1>
-     <p class="mt-4 max-w-2xl">
-      AksaraPeduli adalah platform donasi digital yang berfokus pada pendidikan di Indonesia. Mari bergabung dan berkontribusi untuk masa depan yang lebih baik.
-     </p>
-     <a class="mt-6 bg-blue-600 text-white px-6 py-3 rounded" href="#">
-      Mulai Donasi
-     </a>
-    </div>
-   </section>
-   <section class="container mx-auto px-4 py-12">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-     <div class="bg-white p-6 rounded-lg shadow">
-      <h2 class="text-xl font-semibold">
-       Pembangunan Sekolah
-      </h2>
-      <p class="mt-4 text-gray-600">
-       Rp 40.000.000
-      </p>
-      <a class="mt-6 inline-block bg-blue-600 text-white px-4 py-2 rounded" href="#">
-       Donasi
-      </a>
-     </div>
-     <div class="bg-white p-6 rounded-lg shadow">
-      <h2 class="text-xl font-semibold">
-       Sekolah Keliling
-      </h2>
-      <p class="mt-4 text-gray-600">
-       Rp 30.000.000
-      </p>
-      <a class="mt-6 inline-block bg-blue-600 text-white px-4 py-2 rounded" href="#">
-       Donasi
-      </a>
-     </div>
-     <div class="bg-white p-6 rounded-lg shadow">
-      <h2 class="text-xl font-semibold">
-       Layanan Kesehatan
-      </h2>
-      <p class="mt-4 text-gray-600">
-       Rp 50.000.000
-      </p>
-      <a class="mt-6 inline-block bg-blue-600 text-white px-4 py-2 rounded" href="#">
-       Donasi
-      </a>
-     </div>
-    </div>
-   </section>
-   <section class="container mx-auto px-4 py-12">
-    <div class="flex flex-col md:flex-row items-center">
-     <div class="md:w-2/3">
+    <section id="hero" class="relative w-full h-[1600px] overflow-hidden items-center text-center justify-center">
+        <div class="overlay"></div>
+        <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Anak SD" class="w-full h-[600px] absolute object-cover -z-10">
+        <div class="hero-text">
+            <h1 class="text-white font-bold mt-48 sm:text-xl md:text-3xl lg:text-5xl font-[poppins] [text-shadow:0px_3px_7px_#000000;]">Bersama, Kita Ciptakan Generasi Emas!</h1>
+            <p class="text-white mt-4 mb-5 font-semibold sm:text-xs md:text-xs lg:text-sm [text-shadow:0px_3px_7px_#000000;]">Setiap anak berhak mendapatkan pendidikan yang layak. Bersama, kita bisa membantu<br>mereka meraih mimpi dan menciptakan masa depan yang lebih baik.</p>
+            <a href="">
+                <span class="text-white sm:text-xs font-semibold md:text-xs lg:text-sm [text-shadow:0px_3px_7px_#000000;]">Informasi Selengkapnya<br></span>
+            </a>
+            <button class="px-7 z-10 py-3 mt-10 bg-[#0D92F4] rounded-md text-white relative font-semibold after:-z-10 after:absolute after:h-1 after:w-1 after:bg-[#44c7ff] after:left-5 
+            overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all 
+            after:duration-700 transition-all duration-700 text-sm">
+                Mulai Donasi
+            </button>
+        </div>
+        <section id="sub-hero" class="container mx-auto w-full h-[500px] mt-10">
+            <div class="justify-center gap-16 px-4 pb-5 z-30 grid md:grid-cols-3 lg:flex">
+                <div class="relative w-[220px] h-[410px] rounded-lg bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]">
+                    <img loading="lazy" decoding="async" data-nimg="1" class="w-[220px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
+                    src="https://images.unsplash.com/photo-1640488065806-e3cf96865965?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Perbaikan Sekolah SDN Tadika Mesra">
+                    <div class="p-3">
+                        <div class="mb-2 flex">
+                            <span class="inline-block overflow-hidden text-xs text-ellipsis whitespace-nowrap">Sumbawa</span>
+                        </div>
+                        <span class="mb-3 block h-auto overflow-hidden break-words text-left font-semibold">Perbaikan Sekolah SDN Tadika Mesra</span>
+                        <div class="absolute bottom-16">
+                            <svg width="195px" height="5" aria-label="progressBar">
+                                <rect x="0" rx="3" width="100%" height="100%" fill="#E8E8E8"></rect>
+                                <rect x="0" rx="3" width="82%" height="100%" fill="#10A8E5" aria-describedby="progress 80%"></rect>
+                            </svg>
+                            <div class="mt-[5px] flex">
+                                <span class="text-sm font-semibold text-left">Rp 21.029.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                    class="px-5 z-10 py-2 bg-[#0D92F4] rounded-[10px] text-white absolute bottom-4 left-[68px] font-semibold hover:bg-[#44c7ff] duration-300 text-sm">
+                        Donasi
+                    </button>
+                </div>
+
+                <div class="relative w-[220px] h-[410px] rounded-lg bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]">
+                    <img loading="lazy" decoding="async" data-nimg="1" class="w-[220px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
+                    src="https://images.unsplash.com/photo-1634044060889-7e8fcf0e415c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Pembelian Buku Belajar Siswa">
+                    <div class="p-3">
+                        <div class="mb-2 flex">
+                            <span class="inline-block overflow-hidden text-xs text-ellipsis whitespace-nowrap">Lombok</span>
+                        </div>
+                        <span class="mb-3 block h-auto overflow-hidden break-words text-left font-semibold">Pembelian Buku Belajar Siswa SMPN Mekar Sari</span>
+                        <div class="absolute bottom-16">
+                            <svg width="195px" height="5" aria-label="progressBar">
+                                <rect x="0" rx="3" width="100%" height="100%" fill="#E8E8E8"></rect>
+                                <rect x="0" rx="3" width="51.78%" height="100%" fill="#10A8E5" aria-describedby="progress 80%"></rect>
+                            </svg>
+                            <div class="mt-[5px] flex">
+                                <span class="text-sm font-semibold text-left">Rp 5.112.200</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                    class="px-5 z-10 py-2 bg-[#0D92F4] rounded-[10px] text-white absolute bottom-4 left-[68px] font-semibold hover:bg-[#44c7ff] duration-300 text-sm">
+                        Donasi
+                    </button>
+                </div>
+
+                <div class="relative w-[220px] h-[410px] rounded-lg bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]">
+                    <img loading="lazy" decoding="async" data-nimg="1" class="w-[220px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
+                    src="https://images.unsplash.com/photo-1630705605873-5d7776c38d78?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="">
+                    <div class="p-3">
+                        <div class="mb-2 flex">
+                            <span class="inline-block overflow-hidden text-xs text-ellipsis whitespace-nowrap">Nias</span>
+                        </div>
+                        <span class="mb-3 block h-auto overflow-hidden break-words text-left font-semibold">Pengadaan Fasilitas  SDN Taruna Bangsa</span>
+                        <div class="absolute bottom-16">
+                            <svg width="195px" height="5" aria-label="progressBar">
+                                <rect x="0" rx="3" width="100%" height="100%" fill="#E8E8E8"></rect>
+                                <rect x="0" rx="3" width="78.9%" height="100%" fill="#10A8E5" aria-describedby="progress 80%"></rect>
+                            </svg>
+                            <div class="mt-[5px] flex">
+                                <span class="text-sm font-semibold text-left">Rp 15.753.000</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button
+                    class="px-5 z-10 py-2 bg-[#0D92F4] rounded-[10px] text-white absolute bottom-4 left-[68px] font-semibold hover:bg-[#44c7ff] duration-300 text-sm">
+                        Donasi
+                    </button>
+                </div>
+
+            </div>
+        </section>
+    
+    </section>
       <h2 class="text-2xl font-semibold">
        Aksara Peduli - Bersama, Kita Ciptakan Generasi Emas
       </h2>

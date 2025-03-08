@@ -1,24 +1,26 @@
 {
   "name": "aksarapeduli",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "halaman web",
+  "homepage": "https://github.com/Xuzann/AksaraPeduli#readme",
+  "bugs": {
+    "url": "https://github.com/Xuzann/AksaraPeduli/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Xuzann/AksaraPeduli.git"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC",
+  "author": "way",
   "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/Xuzann/AksaraPeduli/issues"
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev" : "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch"
+
   },
-  "homepage": "https://github.com/Xuzann/AksaraPeduli#readme",
-  "description": "",
-  "devDependencies": {
-    "tailwindcss": "^3.4.17"
+  "dependencies": {
+    "@tailwindcss/cli": "^4.0.12",
+    "tailwindcss": "^4.0.12"
   }
 }

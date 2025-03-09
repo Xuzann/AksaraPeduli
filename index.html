@@ -9,37 +9,74 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
         rel="stylesheet">
-    <link href="./src/output.css" rel="stylesheet">
-    <title>
-        Aksara Peduli
-    </title>
+
+
+    <title> Aksara Peduli </title>
+    
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
     </style>
-    <script></script>
+
+    <link href="dist/output.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100">
-    <header class="bg-white shadow">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="text-lg font-semibold">
-                AksaraPeduli
+<body>
+    <!-- Header -->
+    <header class="bg-transparent absolute top-0 left-0 w-full flex items-center z-10 ">
+        <div class="container">
+            <div class="flex items-center justify-between relative">
+                <div class="px-4">
+                   <h1 class="font-semibold block py-5">AskaraPeduli</h1>
+                </div>
+
+                <div class="flex items-center px-4">
+                    <button id="hamburger" name="hamburger" type="button" class="block absolute right-4 lg:hidden">
+                       <span class="hamburger-line transition duration-300 ease-in-out origin-top-left"></span>
+                       <span class="hamburger-line transition duration-300 ease-in-out"></span>
+                       <span class="hamburger-line transition duration-300 ease-in-out origin-top-left"></span>
+                    </button>
+
+                    <nav id="nav-menu"
+                        class="absolute py-5 bg-white
+                  shadow-lg rounded-lg max-w-[250px] w-full right-4 top-full lg:block lg:static lg:bg-transparent lg:max-w-full lg:shadow-none lg:rounded-none">
+                        <ul class="block lg:flex">
+                            <li class="group">
+                                <a href="#beranda" class="text-base text-black py-2 mx-8 
+                                group-hover:text-blue-200 flex">Beranda</a>
+                            </li>
+                            <li class="group">
+                                <a href="#tentang" class="text-base text-black py-2 mx-8
+                        group-hover:text-blue-200 flex">Tentang</a>
+                            </li>
+                            <li class="group">
+                                <a href="#informasi" class="text-base text-black py-2 mx-8
+                        group-hover:text-blue-200 flex">Informasi</a>
+                            </li>
+                            <li class="group">
+                                <a href="#donasi" class="text-base bg-blue-400 text-white py-2 mx-8
+                        group-hover:text-blue-200 flex rounded-lg px-4 ">Mulai Donasi</a>
+                            </li>
+                            <li class="group">
+                                <a href="#profil" class="text-base text-black py-2 mx-8
+                        group-hover:text-blue-200 flex">Profil</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
             </div>
-            <nav class="space-x-4">
-                <a class="text-gray-600 hover:text-gray-800" href="#">Beranda</a>
-                <a class="text-gray-600 hover:text-gray-800" href="#">Informasi</a>
-                <a class="text-gray-600 hover:text-gray-800" href="#">Tentang</a>
-                <a class="bg-blue-600 text-white px-4 py-2 rounded" href="#">Mulai Donasi</a>
-            </nav>
         </div>
     </header>
+
+    <!-- Header Selesai -->
     <main>
         <section id="hero" class="relative w-full h-[1200px] overflow-hidden items-center text-center justify-center">
             <div class="overlay"></div>
             <img src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                alt="Anak SD" class="w-full h-[600px] absolute object-cover -z-10">
+                alt="Anak SD" class="w-full h-[700px] absolute object-cover -z-10 top-20">
             <div class="hero-text">
                 <h1
                     class="text-white font-bold mt-48 sm:text-xl md:text-3xl lg:text-4xl xl:text-5xl font-[poppins] [text-shadow:0px_3px_7px_#000000;]">
@@ -161,16 +198,17 @@
                 Aksara Peduli - Bersama, Kita Ciptakan Generasi Emas
             </h2>
             <p class="mt-4 text-gray-600">
-                AksaraPeduli adalah platform donasi digital yang berfokus pada pendidikan di Indonesia. Bergabunglah dengan
+                AksaraPeduli adalah platform donasi digital yang berfokus pada pendidikan di Indonesia. Bergabunglah
+                dengan
                 kami untuk mendukung pendidikan yang merata dan berkualitas di seluruh Indonesia. Dengan berdonasi, Anda
                 membantu menciptakan generasi emas yang siap menghadapi tantangan masa depan.
             </p>
             </div>
-                <div class="md:w-1/3 mt-6 md:mt-0 md:ml-6">
-                    <img alt="A woman with two children smiling" class="rounded-lg shadow" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/ttz5eX67dIttEEBSS-BEgURGljUzwUe2_5ylpYDMu0E.jpg"
-                        width="400" />
-                </div>
+            <div class="md:w-1/3 mt-6 md:mt-0 md:ml-6">
+                <img alt="A woman with two children smiling" class="rounded-lg shadow" height="300"
+                    src="https://storage.googleapis.com/a1aa/image/ttz5eX67dIttEEBSS-BEgURGljUzwUe2_5ylpYDMu0E.jpg"
+                    width="400" />
+            </div>
             </div>
         </section>
         <section class="container mx-auto px-4 py-12">
@@ -255,6 +293,9 @@
             © 2025 AksaraPeduli. All Rights Reserved.
         </div>
     </footer>
+
+    
+    <script src="dist/js/script.js"></script>
 </body>
 
 </html>

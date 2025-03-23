@@ -1,12 +1,12 @@
 <?php
+$host = "localhost";
+$user = "root";
+$password = "";
+$database = "aksarapeduli";
 
-$conn = mysqli_connect("localhost","root","","aksarapeduli");
+$conn = new mysqli($host, $user, $password, $database);
 
-if(!$conn){
-	echo "Koneksi gagal";
-	die();
-} else {
-//	echo "Koneksi berhasil";
+if ($conn->connect_error) {
+    die("Koneksi gagal: " . $conn->connect_error);
 }
-
 ?>

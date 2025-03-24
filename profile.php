@@ -50,42 +50,7 @@ $conn->close();
     <script></script>
 </head>
 
-<body class="bg-white font-[poppins]">
-    <nav class="bg-white shadow-md fixed w-full z-10">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
-            <!-- Logo -->
-            <div class="flex ">
-                <a href="#"></a>
-                <img src="image/logo.png" class="h-[75px]" alt="Logo AksaraPeduli">
-            </div>
-
-            <!-- Menu Navigasi -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#tentang" class="text-gray-700 hover:text-[#44c7ff]">Tentang</a>
-                <a href="#kegiatan" class="text-gray-700 hover:text-[#44c7ff]">Kegiatan</a>
-                <a href="#kontak" class="text-gray-700 hover:text-[#44c7ff]">Kontak</a>
-                <a href="#" class="bg-[#3874B3] text-white px-4 py-2 rounded-lg hover:bg-[#44c7ff] transition">
-                    Mulai Donasi
-                </a>
-                <!-- Ikon Profil -->
-                <a href="profile.php">
-                    <button class="relative group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700 hover:text-[#44c7ff] "
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" />
-                        </svg>
-
-                    </button>
-                </a>
-
-            </div>
-            <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-                ☰
-            </button>
-        </div>
-    </nav>
+<?php include "layout/header.html" ?>
     <main class="">
         <div class="flex flex-col justify-center items-center">
             <img class="w-32 h-32 rounded-full bg-gray-300" src="https://via.placeholder.com/150" alt="Profile Picture">
@@ -114,5 +79,6 @@ $conn->close();
             <div class="text-gray-700 text-lg font-semibold">Pencapaian anda</div>
         </div>
     </main>
+    <?php include "layout/footer.html" ?>
 </body>
 </html>

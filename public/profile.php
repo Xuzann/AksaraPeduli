@@ -153,7 +153,7 @@ $conn->close();
             </section>
 
             <section id="chart">
-                <div class="text-lg font-semibold">Pencapaian anda</div>
+                <div class="text-lg font-semibold">Pencapaian Anda</div>
 
                 <div id="chart-container">
                     <canvas id="myLineChart"></canvas>
@@ -161,58 +161,43 @@ $conn->close();
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
-                        const ctx = document.getElementById('myLineChart').getContext('2d');
-
-                        // Setup data untuk chart
-                        const data = {
-                            labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei'], // Sumbu X (Bulan)
-                            datasets: [{
-                                label: 'Jumlah Donasi (Rp)',
-                                data: [10000000, 15000000, 12000000, 18000000, 20000000], // Data dalam Rupiah
-                                borderColor: 'rgba(75, 192, 192, 1)',
-                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                borderWidth: 2,
-                                tension: 0.1 // Garis lebih mulus
-                            }]
-                        };
-
-                        // Konfigurasi chart
-                        const config = {
-                            type: 'line',
-                            data: data,
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                scales: {
-                                    y: {
-                                        beginAtZero: true,
-                                        ticks: {
-                                            // Menentukan langkah kelipatan 5 juta
-                                            stepSize: 5000000,
-                                            callback: function(value) {
-                                                return 'Rp' + value.toLocaleString('id-ID');
+                        fetch("get_donations.php") // Ambil data dari PHP
+                            .then(response => response.json())
+                            .then(data => {
+                                const ctx = document.getElementById('myLineChart').getContext('2d');
+                                new Chart(ctx, {
+                                    type: 'line',
+                                    data: {
+                                        labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
+                                        datasets: [{
+                                            label: 'Jumlah Donasi per Bulan',
+                                            data: data, // Data dari PHP
+                                            borderColor: 'rgba(75, 192, 192, 1)',
+                                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                            borderWidth: 2,
+                                            tension: 0.1
+                                        }]
+                                    },
+                                    options: {
+                                        responsive: true,
+                                        maintainAspectRatio: false,
+                                        scales: {
+                                            y: {
+                                                beginAtZero: true,
+                                                ticks: {
+                                                    stepSize: 1 // Pastikan hanya angka bulat
+                                                }
                                             }
                                         }
                                     }
-                                },
-                                plugins: {
-                                    tooltip: {
-                                        callbacks: {
-                                            label: function(context) {
-                                                let value = context.raw;
-                                                return 'Rp' + value.toLocaleString('id-ID');
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        };
-
-                        // Membuat chart
-                        new Chart(ctx, config);
+                                });
+                            })
+                            .catch(error => console.error("Gagal mengambil data: ", error));
                     });
                 </script>
+
             </section>
+
         </section>
     </main>
 </body>

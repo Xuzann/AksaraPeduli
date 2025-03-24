@@ -268,9 +268,6 @@
   .sticky {
     position: sticky;
   }
-  .top-1 {
-    top: calc(var(--spacing) * 1);
-  }
   .top-1\/2 {
     top: calc(1/2 * 100%);
   }
@@ -430,17 +427,11 @@
   .mt-4 {
     margin-top: calc(var(--spacing) * 4);
   }
-  .mt-6 {
-    margin-top: calc(var(--spacing) * 6);
-  }
   .mt-7 {
     margin-top: calc(var(--spacing) * 7);
   }
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
-  }
-  .mt-15 {
-    margin-top: calc(var(--spacing) * 15);
   }
   .mt-16 {
     margin-top: calc(var(--spacing) * 16);
@@ -456,15 +447,6 @@
   }
   .mt-\[35px\] {
     margin-top: 35px;
-  }
-  .mt-\[40px\] {
-    margin-top: 40px;
-  }
-  .mt-\[45px\] {
-    margin-top: 45px;
-  }
-  .mt-\[55px\] {
-    margin-top: 55px;
   }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
@@ -505,20 +487,11 @@
   .ml-36 {
     margin-left: calc(var(--spacing) * 36);
   }
-  .ml-40 {
-    margin-left: calc(var(--spacing) * 40);
-  }
   .ml-52 {
     margin-left: calc(var(--spacing) * 52);
   }
   .ml-\[85px\] {
     margin-left: 85px;
-  }
-  .ml-\[100px\] {
-    margin-left: 100px;
-  }
-  .ml-\[180px\] {
-    margin-left: 180px;
   }
   .ml-\[200px\] {
     margin-left: 200px;
@@ -679,9 +652,6 @@
   .min-h-screen {
     min-height: 100vh;
   }
-  .w-1 {
-    width: calc(var(--spacing) * 1);
-  }
   .w-1\/2 {
     width: calc(1/2 * 100%);
   }
@@ -703,23 +673,11 @@
   .w-\[80\%\] {
     width: 80%;
   }
-  .w-\[200px\] {
-    width: 200px;
-  }
-  .w-\[250px\] {
-    width: 250px;
-  }
   .w-\[275px\] {
     width: 275px;
   }
   .w-\[360px\] {
     width: 360px;
-  }
-  .w-\[400px\] {
-    width: 400px;
-  }
-  .w-\[500px\] {
-    width: 500px;
   }
   .w-full {
     width: 100%;
@@ -834,10 +792,6 @@
   .translate-full {
     --tw-translate-x: 100%;
     --tw-translate-y: 100%;
-    translate: var(--tw-translate-x) var(--tw-translate-y);
-  }
-  .-translate-y-1 {
-    --tw-translate-y: calc(var(--spacing) * -1);
     translate: var(--tw-translate-x) var(--tw-translate-y);
   }
   .-translate-y-1\/2 {
@@ -1148,35 +1102,17 @@
   .justify-items-stretch {
     justify-items: stretch;
   }
-  .gap-0 {
-    gap: calc(var(--spacing) * 0);
-  }
-  .gap-1 {
-    gap: calc(var(--spacing) * 1);
-  }
-  .gap-3 {
-    gap: calc(var(--spacing) * 3);
-  }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
-  .gap-6 {
-    gap: calc(var(--spacing) * 6);
-  }
   .gap-8 {
     gap: calc(var(--spacing) * 8);
-  }
-  .gap-9 {
-    gap: calc(var(--spacing) * 9);
   }
   .gap-10 {
     gap: calc(var(--spacing) * 10);
   }
   .gap-16 {
     gap: calc(var(--spacing) * 16);
-  }
-  .gap-20 {
-    gap: calc(var(--spacing) * 20);
   }
   .space-y-reverse {
     :where(& > :not(:last-child)) {

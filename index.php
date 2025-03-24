@@ -1,5 +1,3 @@
-
-
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -27,31 +25,31 @@
     <nav class="bg-white shadow-md fixed w-full z-10">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
             <!-- Logo -->
-            <div class="flex space-x-3">
+            <div class="flex ">
                 <a href="#"></a>
-                <img src="/image/logo.png" alt="">
+                <img src="image/logo.png" class="h-[75px]" alt="Logo AksaraPeduli">
             </div>
 
             <!-- Menu Navigasi -->
             <div class="hidden md:flex items-center space-x-6">
-                <a href="#tentang" class="text-gray-700 hover:text-blue-600">Tentang</a>
-                <a href="#kegiatan" class="text-gray-700 hover:text-blue-600">Kegiatan</a>
-                <a href="#kontak" class="text-gray-700 hover:text-blue-600">Kontak</a>
-                <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                <a href="#tentang" class="text-gray-700 hover:text-[#44c7ff]">Tentang</a>
+                <a href="#kegiatan" class="text-gray-700 hover:text-[#44c7ff]">Kegiatan</a>
+                <a href="#kontak" class="text-gray-700 hover:text-[#44c7ff]">Kontak</a>
+                <a href="#" class="bg-[#3874B3] text-white px-4 py-2 rounded-lg hover:bg-[#44c7ff] transition">
                     Mulai Donasi
                 </a>
                 <!-- Ikon Profil -->
-                 <a href="profile.php">
+                <a href="profile.php">
                     <button class="relative group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700 hover:text-blue-600 "
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700 hover:text-[#44c7ff] "
                             viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" />
                         </svg>
-    
+
                     </button>
-                 </a>
-               
+                </a>
+
             </div>
             <!-- Mobile Menu Button -->
             <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
@@ -74,17 +72,17 @@
                 <a href="#about" class="text-white underline font-light text-xs sm:text-xs md:text-sm lg:text-sm">
                     Informasi Selengkapnya<br>
                 </a>
-                <button class="px-7 z-10 py-3 mt-10 bg-[#0D92F4] rounded-md text-white relative font-semibold after:-z-10 after:absolute after:h-1 after:w-1 after:bg-[#44c7ff] after:left-5 
+                <button class="px-7 z-1 py-3 mt-10 bg-[#3874B3] rounded-md text-white relative font-semibold after:-z-10 after:absolute after:h-1 after:w-1 after:bg-[#44c7ff] after:left-5 
                 overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all 
-                after:duration-700 transition-all duration-700 text-sm">
+                after:duration-700 transition-all duration-700 text-sm cursor-pointer">
                     Mulai Donasi
                 </button>
             </div>
             <section id="sub-hero" class="container mx-auto w-full h-[500px] mt-16">
                 <div class="justify-center gap-16 px-4 pb-5 z-30 hidden sm:hidden md:hidden lg:flex">
                     <div
-                        class="relative w-[275px] h-[410px] rounded-lg bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
-                        <img loading="lazy" decoding="async" data-nimg="1"
+                        class="relative w-[275px] h-[410px] rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
+                        <img loading="lazy" decoding="async" data-nimg="1"  
                             class="w-[275px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
                             src="https://images.unsplash.com/photo-1640488065806-e3cf96865965?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                             alt="Perbaikan Sekolah SDN Tadika Mesra">
@@ -107,14 +105,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button
-                            class="px-5 z-10 py-2 bg-[#0D92F4] rounded-[6px] text-white absolute bottom-4 left-[95.5px] font-semibold hover:bg-[#44c7ff] duration-300 text-sm">
+                        <button class="ml-36 mt-7 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
                             Donasi
                         </button>
                     </div>
 
                     <div
-                        class="relative w-[275px] h-[410px] rounded-lg bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
+                        class="relative w-[275px] h-[410px] rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
                         <img loading="lazy" decoding="async" data-nimg="1"
                             class="w-[275px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
                             src="https://images.unsplash.com/photo-1634044060889-7e8fcf0e415c?q=80&w=1932&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -138,14 +135,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button
-                            class="px-5 z-10 py-2 bg-[#0D92F4] rounded-[6px] text-white absolute bottom-4 left-[95.5px] font-semibold hover:bg-[#44c7ff] duration-300 text-sm">
+                        <button class="ml-36 mt-7 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
                             Donasi
                         </button>
                     </div>
 
                     <div
-                        class="relative w-[275px] h-[410px] rounded-lg bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
+                        class="relative w-[275px] h-[410px] rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
                         <img loading="lazy" decoding="async" data-nimg="1"
                             class="w-[275px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
                             src="https://images.unsplash.com/photo-1630705605873-5d7776c38d78?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -169,8 +165,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button
-                            class="px-5 z-10 py-2 bg-[#0D92F4] rounded-[6px] text-white absolute bottom-4 left-[95.5px] font-semibold hover:bg-[#44c7ff] duration-300 text-sm">
+                        <button class="ml-36 mt-7 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
                             Donasi
                         </button>
                     </div>
@@ -178,7 +173,7 @@
             </section>
         </section>
 
-        <section id="about" class="mx-20 h-[650px] sm:h-[700px] md:h-[300px]">
+        <section id="about" class="mx-20 h-[650px] sm:h-[700px] md:h-[360px] lg:h-[500px] xl:h-[500px]">
             <div class="md:flex lg:flex xl:flex max-w-[1500px] gap-4">
                 <div class="max-w-[1600px] pr-3">
                     <h2 class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold tracking-wide">
@@ -198,65 +193,78 @@
                         menghadapi tantangan masa depan.
                     </p>
                 </div>
-                <div class="flex-shrink-0 w-full md:w-[340px] lg:w-[400px] xl:w-[460px]">
+                <div class="flex-shrink-0 w-full md:w-[240px] lg:w-[400px] xl:w-[460px]">
                     <img alt="A woman with two children smiling"
-                        class="rounded-lg shadow object-cover max-w-full h-auto" loading="lazy" src="/gambar1 (1).jpg">
+                        class="rounded-lg shadow object-cover max-w-full h-auto" loading="lazy" src="image/gambar1 (1).jpg">
                 </div>
             </div>
         </section>
 
-        <section class="mx-20 py-12 h-[700px]">
-            <h2 class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold tracking-wide mb-6">
+        <section id="info" class="relative mx-20 py-12 h-[700px]">
+            <h2 class="text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold tracking-wide mb-10">
                 Informasi Kegiatan
             </h2>
-            <div class="container mx-auto  grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <img alt="Event image" class="w-full h-48 object-cover rounded-lg" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/fnLTO-pfEupQYxrQJw092cNtcyPPhLtXdm92Y9pHcs0.jpg"
-                        width="400" />
-                    <h3 class="mt-4 text-xl font-semibold">
-                        Bakti Kepada Sekolah Dasar Makassar
-                    </h3>
-                    <p class="mt-2 text-gray-600">
-                        Rp 20.000.000
-                    </p>
-                    <a class="mt-4 inline-block bg-[#0D92F4] text-white px-4 py-2 rounded" href="#">
-                        Donasi
-                    </a>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <img alt="Event image" class="w-full h-48 object-cover rounded-lg" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/fnLTO-pfEupQYxrQJw092cNtcyPPhLtXdm92Y9pHcs0.jpg"
-                        width="400" />
-                    <h3 class="mt-4 text-xl font-semibold">
-                        Bakti Kepada Sekolah Dasar Makassar
-                    </h3>
-                    <p class="mt-2 text-gray-600">
-                        Rp 20.000.000
-                    </p>
-                    <a class="mt-4 inline-block bg-[#0D92F4] text-white px-4 py-2 rounded" href="#">
-                        Donasi
-                    </a>
-                </div>
-                <div class="bg-white p-6 rounded-lg shadow">
-                    <img alt="Event image" class="w-full h-48 object-cover rounded-lg" height="300"
-                        src="https://storage.googleapis.com/a1aa/image/fnLTO-pfEupQYxrQJw092cNtcyPPhLtXdm92Y9pHcs0.jpg"
-                        width="400" />
-                    <h3 class="mt-4 text-xl font-semibold">
-                        Bakti Kepada Sekolah Dasar Makassar
-                    </h3>
-                    <p class="mt-2 text-gray-600">
-                        Rp 20.000.000
-                    </p>
-                    <a class="mt-4 inline-block bg-[#0D92F4] text-white px-4 py-2 rounded" href="#">
-                        Donasi
-                    </a>
-                </div>
-            </div>
+            <div class="mx-auto ml-[85px] mb-4 flex flex-row space-x-4 overflow-x-auto scroll-smooth pb-4">
+                <div class="flex gap-10 pb-2">
+                    <div class="relative w-[360px] h-[430px] ml-2 flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
+                        <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
+                        <div class="p-3">
+                            <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
+                                Bakti Kepada Sekolah Dasar Maluku Utara
+                            </span>
+                            <div class="mb-7 flex">
+                                <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
+                                <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
+                                <span class="text-xs font-light">01 Oktober 2025</span>
+                            </div>
+                            <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                Selengkapnya
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="flex gap-8 pb-2">
+                        <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
+                            <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
+                            <div class="p-3">
+                                <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
+                                    Bakti Kepada Sekolah Dasar Maluku Utara
+                                </span>
+                                <div class="mb-7 flex">
+                                    <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
+                                    <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
+                                    <span class="text-xs font-light">01 Oktober 2025</span>
+                                </div>
+                                <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                    Selengkapnya
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8 pb-2">
+                            <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
+                                <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
+                                <div class="p-3">
+                                    <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
+                                        Bakti Kepada Sekolah Dasar Maluku Utara
+                                    </span>
+                                    <div class="mb-7 flex">
+                                        <span class="mr-15 inline-block text-xs text-mineshaft font-light">AksaraPeduli - Volunteer</span>
+                                        <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
+                                        <span class="text-xs font-light">01 Oktober 2025</span>
+                                    </div>
+                                    <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                        Selengkapnya
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
         </section>
+
     </main>
-    <footer class="bg-[#E0E9F0] pt-6">
-        <div class="flex flex-col md:flex-row justify-between mx-20 pb-6">
+    <footer class="bg-[#E0E9F0] pt-15">
+        <div class="flex flex-col md:flex-row justify-between mx-20 pb-15">
             <div class="md:w-1/2">
                 <h2 class="font-semibold text-lg mb-2">AksaraPeduli</h2>
                 <p class="text-justify text-sm text-gray-700">
@@ -299,7 +307,7 @@
                 </ul>
             </div>
         </div>
-        <div class="container py-3 text-center text-xs text-white bg-[#3874B3]">
+        <div class="w-full py-3 text-center text-xs text-white bg-[#3874B3]">
             © 2025 AksaraPeduli. All Rights Reserved.
         </div>
     </footer>

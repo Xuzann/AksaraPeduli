@@ -242,6 +242,42 @@
                         </div>
 
                         <div class="flex gap-8 pb-2">
+                        <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
+                            <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
+                            <div class="p-3">
+                                <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
+                                    Bakti Kepada Sekolah Dasar Maluku Utara
+                                </span>
+                                <div class="mb-7 flex">
+                                    <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
+                                    <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
+                                    <span class="text-xs font-light">01 Oktober 2025</span>
+                                </div>
+                                <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                    Selengkapnya
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8 pb-2">
+                        <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
+                            <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
+                            <div class="p-3">
+                                <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
+                                    Bakti Kepada Sekolah Dasar Maluku Utara
+                                </span>
+                                <div class="mb-7 flex">
+                                    <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
+                                    <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
+                                    <span class="text-xs font-light">01 Oktober 2025</span>
+                                </div>
+                                <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                    Selengkapnya
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-8 pb-2">
                             <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
                                 <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
                                 <div class="p-3">

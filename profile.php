@@ -27,43 +27,58 @@ $stmt->close();
 $conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="id">
+<html lang="en" class="scroll-smooth">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pengguna</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link href="./src/output.css" rel="stylesheet">
+    <title>
+        Aksara Peduli
+    </title>
+    <style>
+        body {
+            font-family: 'poppins';
+        }
+    </style>
+    <script></script>
 </head>
-<body class="bg-gray-100 flex flex-col items-center min-h-screen p-6">
-<nav class="bg-white shadow-md fixed w-full z-10">
+
+<body class="bg-white font-[poppins]">
+    <nav class="bg-white shadow-md fixed w-full z-10">
         <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
             <!-- Logo -->
-            <div class="flex space-x-3">
+            <div class="flex ">
                 <a href="#"></a>
-                <img src="/image/logo.png">
+                <img src="image/logo.png" class="h-[75px]" alt="Logo AksaraPeduli">
             </div>
 
             <!-- Menu Navigasi -->
             <div class="hidden md:flex items-center space-x-6">
-                <a href="#tentang" class="text-gray-700 hover:text-blue-600">Tentang</a>
-                <a href="#kegiatan" class="text-gray-700 hover:text-blue-600">Kegiatan</a>
-                <a href="#kontak" class="text-gray-700 hover:text-blue-600">Kontak</a>
-                <a href="#" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+                <a href="#tentang" class="text-gray-700 hover:text-[#44c7ff]">Tentang</a>
+                <a href="#kegiatan" class="text-gray-700 hover:text-[#44c7ff]">Kegiatan</a>
+                <a href="#kontak" class="text-gray-700 hover:text-[#44c7ff]">Kontak</a>
+                <a href="#" class="bg-[#3874B3] text-white px-4 py-2 rounded-lg hover:bg-[#44c7ff] transition">
                     Mulai Donasi
                 </a>
                 <!-- Ikon Profil -->
-                 
+                <a href="profile.php">
                     <button class="relative group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700 hover:text-blue-600 "
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700 hover:text-[#44c7ff] "
                             viewBox="0 0 24 24" fill="currentColor">
                             <path
                                 d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" />
                         </svg>
-    
+
                     </button>
-                 
-               
+                </a>
+
             </div>
             <!-- Mobile Menu Button -->
             <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
@@ -71,7 +86,6 @@ $conn->close();
             </button>
         </div>
     </nav>
-    
     <main class="">
         <div class="flex flex-col justify-center items-center">
             <img class="w-32 h-32 rounded-full bg-gray-300" src="https://via.placeholder.com/150" alt="Profile Picture">

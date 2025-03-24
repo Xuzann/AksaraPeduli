@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $user['password'])) {
             $_SESSION["user_id"] = $user["id"];
             $_SESSION["user_name"] = $user["nama"];
-            echo "<script>alert('Login berhasil!'); window.location.href='dashboard.php';</script>";
+            echo "<script>alert('Login berhasil!'); window.location.href='index.html';</script>";
         } else {
             echo "<script>alert('Password salah!'); window.location.href='login.php';</script>";
         }

@@ -40,102 +40,136 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
-<header>
-    <div class="mb-8">
-        <img src="image/logo.png" alt="AksaraPeduli logo" class="h-14">
-    </div>
+<header class="flex items-center pl-7 pt-4 absolute">
+    <img src="image/logo.png" alt="AksaraPeduli logo" class="h-16 ml-4">
 </header>
 
+
 <body class="bg-white">
-    <div class="flex min-h-screen">
+    <div class="flex justify-center items-center min-h-screen gap-16 px-6 md:px-20 relative ">
         <!-- Left side (form) -->
-        <div class="container ml-20 w-[80%]">
-            <div class="w-full md:w-1/2 p-8 md:p-10 relative">
+        <div class="w-full max-w-lg bg-white p-8 md:p-10">
+            <!-- Form Header -->
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-semibold mb-2">Buat Akun Anda</h1>
+                <p class="text-gray-600 text-xs">AksaraPeduli Mewujudkan Perubahan dengan Kepedulian</p>
+            </div>
 
-                <!-- Form Header -->
-                <div class="text-center mb-6">
-                    <h1 class="text-2xl font-semibold mb-2">Buat Akun Anda</h1>
-                    <p class="text-gray-600 text-sm">AksaraPeduli Mewujudkan Perubahan dengan Kepedulian</p>
+            <!-- Google Sign Up Button -->
+            <button class="w-full flex items-center justify-center border border-gray-300 rounded-2xl py-2.5 px-4 hover:bg-gray-50 transition">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Google Logo" class="w-5 h-5 mr-2">
+                <span class="text-sm">Daftar dengan Google</span>
+            </button>
+
+            <!-- Divider -->
+            <div class="flex items-center my-6">
+                <hr class="flex-grow border-[0.5px] rounded-[1px] border-b-gray-300">
+                <span class="px-4 text-gray-500 text-xs">atau</span>
+                <hr class="flex-grow border-[0.5px] rounded-[1px] border-b-gray-300">
+            </div>
+
+            <!-- Registration Form -->
+            <form action="prosesTambahUser.php" method="POST" onsubmit="return validateForm()">
+                <!-- Name Field -->
+                <div class="mb-4">
+                    <label for="nama" class="block text-gray-700 ml-3 mb-2 text-sm">Nama</label>
+                    <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda"
+                        class="w-full px-4 py-2.5 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                        required>
                 </div>
 
-                <!-- Google Sign Up Button -->
-                <div class="mb-6">
-                    <button class="w-full flex items-center justify-center border border-gray-300 rounded-lg py-2.5 px-4 hover:bg-gray-50 transition duration-200">
-                        <span class="text-red-500 mr-2 font-bold">G</span>
-                        <span>Daftar dengan Google</span>
-                    </button>
+                <!-- Email Field -->
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 ml-3 mb-2 text-sm">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Masukkan email Anda"
+                        class="w-full px-4 py-2.5 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                        required>
                 </div>
 
-                <!-- Divider -->
-                <div class="flex items-center mb-6">
-                    <hr class="flex-grow border-gray-200">
-                    <span class="px-4 text-gray-500 text-sm">atau</span>
-                    <hr class="flex-grow border-gray-200">
-                </div>
-
-                <!-- Registration Form -->
-                <form action="prosesTambahUser.php" method="POST" onsubmit="return validateForm()">
-                    <!-- Name Field -->
-                    <div class="mb-4">
-                        <label for="nama" class="block text-gray-700 mb-2">Nama</label>
-                        <input type="text" id="nama" name="nama" placeholder="Masukkan nama Anda"
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                <!-- Password Field -->
+                <div class="mb-2">
+                    <label for="password" class="block text-gray-700 ml-3 mb-2 text-sm">Kata Sandi</label>
+                    <div class="relative">
+                        <input type="password" id="password" name="password" placeholder="Masukkan kata sandi Anda"
+                            class="w-full px-4 py-2.5 border text-xs border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
                             required>
+                        <span class="absolute right-3 top-1/2 -translate-y-1/2 cursor-pointer text-gray-500" onclick="togglePassword()" aria-label="Tampilkan kata sandi">
+                            <i class="fa fa-eye-slash p-[1px]" id="toggleIcon"></i>
+                        </span>
                     </div>
+                </div>
 
-                    <!-- Email Field -->
-                    <div class="mb-4">
-                        <label for="email" class="block text-gray-700 mb-2">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Masukkan email Anda"
-                            class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                            required>
-                    </div>
+                <!-- Terms Checkbox -->
+                <div class="mb-6 flex ml-3 items-start">
+                    <input type="checkbox" id="terms" class="mt-1 mr-2" required>
+                    <label for="terms" class="text-gray-600 mt-[2px] text-xs">Saya menyetujui semua Syarat, Kebijakan Privasi, dan Biaya</label>
+                </div>
 
-                    <!-- Password Field -->
-                    <div class="mb-4">
-                        <label for="password" class="block text-gray-700 mb-2">Kata Sandi</label>
-                        <div class="relative">
-                            <input type="password" id="password" name="password" placeholder="Masukkan kata sandi Anda"
-                                class="w-full px-4 py-2.5 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                required>
-                            <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500" onclick="togglePassword()">
-                                <i class="fa fa-eye-slash" id="toggleIcon"></i>
-                            </span>
-                        </div>
-                    </div>
-
-                    <!-- Terms Checkbox -->
-                    <div class="mb-6">
-                        <div class="flex items-start">
-                            <input type="checkbox" id="terms" class="mt-1 mr-2" required>
-                            <label for="terms" class="text-gray-600 text-sm">Saya menyetujui semua Syarat, Kebijakan Privasi, dan Biaya</label>
-                        </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-200">
+                <!-- Submit Button -->
+                <div class="flex w-full">
+                    <button type="submit" class="w-[47.5%] mx-auto text-sm py-3 bg-[#3874B3] text-white rounded-lg hover:bg-[#44c7ff] transition">
                         Daftar
                     </button>
-                </form>
-
-                <!-- Login Link -->
-                <div class="text-center mt-4 text-gray-600">
-                    Sudah punya akun? <a href="login.php" class="text-blue-600 hover:underline">Masuk</a>
                 </div>
+            </form>
 
-                <!-- Back Button -->
-                <a href="index.php" class="absolute bottom-6 left-6 w-10 h-10 bg-blue-600 text-white rounded-full flex items-center justify-center hover:bg-blue-700 transition duration-200">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
+            <!-- Login Link -->
+            <div class="text-center mt-2 text-gray-600 text-xs">
+                Sudah punya akun? <a href="login.php" class="text-[#3b8eb5] hover:underline">Masuk</a>
             </div>
         </div>
 
-
         <!-- Right side (image) -->
-        <div class="hidden md:block md:w-1/2">
-            <img src="image/image 10.jpg" alt="Children studying together" class="h-[600px] mt-20 object-cover">
+        <div class="hidden md:block">
+            <img src="image/image 10.jpg" alt="Children studying together" class="h-[600px] object-cover">
         </div>
     </div>
+
+    <a href="login.php" class="fixed ml-20 mb-5 bottom-6 left-6 w-10 h-10 bg-[#3874B3] text-white rounded-full flex items-center justify-center hover:bg-[#44c7ff] transition">
+        <i class="fa fa-chevron-left" aria-hidden="true"></i>
+    </a>
+
+    <script>
+        function togglePassword() {
+            const passwordField = document.getElementById("password");
+            const toggleIcon = document.getElementById("toggleIcon");
+
+            if (passwordField.type === "password") {
+                passwordField.type = "text";
+                toggleIcon.classList.remove("fa-eye-slash");
+                toggleIcon.classList.add("fa-eye");
+            } else {
+                passwordField.type = "password";
+                toggleIcon.classList.remove("fa-eye");
+                toggleIcon.classList.add("fa-eye-slash");
+            }
+        }
+
+        function validateForm() {
+            const nama = document.getElementById("nama").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value.trim();
+
+            if (nama.length < 3) {
+                alert("Nama harus memiliki minimal 3 karakter.");
+                return false;
+            }
+
+            if (!email.includes("@")) {
+                alert("Masukkan alamat email yang valid.");
+                return false;
+            }
+
+            if (password.length < 6) {
+                alert("Kata sandi harus memiliki minimal 6 karakter.");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+
 
     <script>
         function togglePassword() {

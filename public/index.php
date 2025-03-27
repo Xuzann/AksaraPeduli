@@ -23,7 +23,7 @@
 
 <body class="bg-white font-[poppins]">
     <nav class="bg-white shadow-md fixed w-full z-10">
-        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
+        <div class="max-w-7xl mx-auto flex justify-between items-center h-16">
             <!-- Logo -->
             <div class="flex ">
                 <a href="#"></a>
@@ -35,7 +35,7 @@
                 <a href="#tentang" class="text-gray-700 hover:text-[#44c7ff]">Tentang</a>
                 <a href="#kegiatan" class="text-gray-700 hover:text-[#44c7ff]">Kegiatan</a>
                 <a href="#kontak" class="text-gray-700 hover:text-[#44c7ff]">Kontak</a>
-                <a href="#" class="bg-[#3874B3] text-white px-4 py-2 rounded-lg hover:bg-[#44c7ff] transition">
+                <a href="#" class="px-5 py-3 bg-[#3874B3] rounded-md text-white relative font-semibold  hover:bg-[#44c7ff] transition-all duration-300 text-sm cursor-pointer">
                     Mulai Donasi
                 </a>
                 <!-- Ikon Profil -->
@@ -72,9 +72,7 @@
                 <a href="#about" class="text-white underline font-light text-xs sm:text-xs md:text-sm lg:text-sm">
                     Informasi Selengkapnya<br>
                 </a>
-                <button class="px-7 z-1 py-3 mt-10 bg-[#3874B3] rounded-md text-white relative font-semibold after:-z-10 after:absolute after:h-1 after:w-1 after:bg-[#44c7ff] after:left-5 
-                overflow-hidden after:bottom-0 after:translate-y-full after:rounded-md after:hover:scale-[300] after:hover:transition-all after:hover:duration-700 after:transition-all 
-                after:duration-700 transition-all duration-700 text-sm cursor-pointer">
+                <button class="px-7 z-1 py-3 mt-10 bg-[#3874B3] rounded-md text-white relative font-semibold  hover:bg-[#44c7ff] transition-all duration-300 text-sm cursor-pointer">
                     Mulai Donasi
                 </button>
             </div>

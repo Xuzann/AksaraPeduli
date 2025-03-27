@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <!-- Submit Button -->
                 <div class="flex w-full mt-8">
-                    <button type="submit" class="w-[47.5%] mx-auto text-sm py-3 bg-[#3874B3] text-white rounded-lg hover:bg-[#44c7ff] transition cursor-pointer">
+                    <button type="submit" class="w-[47.5%] mx-auto text-sm py-3 bg-[#3874B3] text-white rounded-lg hover:bg-[#44c7ff] transition duration-300 cursor-pointer">
                         Masuk
                     </button>
                 </div>
@@ -138,7 +138,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
     </div>
 
-    <a href="index.php" class="fixed ml-20 mb-5 bottom-6 left-6 w-10 h-10 bg-[#3874B3] text-white rounded-full flex items-center justify-center hover:bg-[#44c7ff] transition">
+    <a href="index.php" class="fixed ml-20 mb-5 bottom-6 left-6 w-10 h-10 bg-[#3874B3] text-white rounded-full flex items-center justify-center hover:bg-[#44c7ff]  duration-300 transition">
         <i class="fa fa-chevron-left" aria-hidden="true"></i>
     </a>
 

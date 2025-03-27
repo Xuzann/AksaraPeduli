@@ -470,6 +470,9 @@
   .mt-7 {
     margin-top: calc(var(--spacing) * 7);
   }
+  .mt-8 {
+    margin-top: calc(var(--spacing) * 8);
+  }
   .mt-10 {
     margin-top: calc(var(--spacing) * 10);
   }
@@ -491,8 +494,20 @@
   .mt-\[5px\] {
     margin-top: 5px;
   }
+  .mt-\[26px\] {
+    margin-top: 26px;
+  }
   .mt-\[35px\] {
     margin-top: 35px;
+  }
+  .mt-\[45px\] {
+    margin-top: 45px;
+  }
+  .mt-\[47px\] {
+    margin-top: 47px;
+  }
+  .mr-0 {
+    margin-right: calc(var(--spacing) * 0);
   }
   .mr-2 {
     margin-right: calc(var(--spacing) * 2);
@@ -557,6 +572,9 @@
   .ml-\[50px\] {
     margin-left: 50px;
   }
+  .ml-\[80px\] {
+    margin-left: 80px;
+  }
   .ml-\[85px\] {
     margin-left: 85px;
   }
@@ -565,6 +583,9 @@
   }
   .ml-\[110px\] {
     margin-left: 110px;
+  }
+  .ml-\[180px\] {
+    margin-left: 180px;
   }
   .ml-\[210px\] {
     margin-left: 210px;
@@ -779,8 +800,17 @@
   .w-\[80\%\] {
     width: 80%;
   }
+  .w-\[100px\] {
+    width: 100px;
+  }
+  .w-\[250px\] {
+    width: 250px;
+  }
   .w-\[275px\] {
     width: 275px;
+  }
+  .w-\[300px\] {
+    width: 300px;
   }
   .w-\[360px\] {
     width: 360px;
@@ -817,6 +847,9 @@
   }
   .min-w-screen {
     min-width: 100vw;
+  }
+  .flex-1 {
+    flex: 1;
   }
   .flex-auto {
     flex: auto;
@@ -986,6 +1019,15 @@
   }
   .snap-normal {
     scroll-snap-stop: normal;
+  }
+  .scroll-m-10 {
+    scroll-margin: calc(var(--spacing) * 10);
+  }
+  .-scroll-mt-10 {
+    scroll-margin-top: calc(var(--spacing) * -10);
+  }
+  .-scroll-mb-10 {
+    scroll-margin-bottom: calc(var(--spacing) * -10);
   }
   .list-inside {
     list-style-position: inside;
@@ -1215,6 +1257,15 @@
   .justify-items-stretch {
     justify-items: stretch;
   }
+  .gap-1 {
+    gap: calc(var(--spacing) * 1);
+  }
+  .gap-1\.5 {
+    gap: calc(var(--spacing) * 1.5);
+  }
+  .gap-3 {
+    gap: calc(var(--spacing) * 3);
+  }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
@@ -1371,6 +1422,12 @@
   }
   .rounded-\[6px\] {
     border-radius: 6px;
+  }
+  .rounded-\[18px\] {
+    border-radius: 18px;
+  }
+  .rounded-\[20px\] {
+    border-radius: 20px;
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);

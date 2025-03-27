@@ -249,10 +249,12 @@ $stmt->close();
                                     <label class="block font-medium text-gray-700 text-sm">Nama</label>
                                     <input type="text" class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4" placeholder="Masukkan nama Anda">
                                 </div>
+
                                 <div class="mb-4">
                                     <label class="block font-medium text-gray-700 text-sm">Email</label>
                                     <input type="email" class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4" placeholder="Masukkan email Anda">
                                 </div>
+
                                 <div class="mb-4">
                                     <label for="password" class="block font-medium text-gray-700 text-sm mb-2">Kata Sandi Lama</label>
                                     <div class="relative">
@@ -264,24 +266,65 @@ $stmt->close();
                                         </span>
                                     </div>
                                 </div>
+
                                 <div class="">
-                                    <label for="password" class="block font-medium text-gray-700 text-sm mb-2">Kata Sandi Baru</label>
+                                    <label for="newPassword" class="block font-medium text-gray-700 text-sm mb-2">Kata Sandi Baru</label>
                                     <div class="relative">
-                                        <input type="password" id="password" name="password" placeholder="Masukkan kata sandi Anda"
+                                        <input type="password" id="newPassword" name="newPassword" placeholder="Masukkan kata sandi Anda"
                                             class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                                             required>
-                                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500" onclick="togglePassword()">
+                                        <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500" onclick="toggleNewPassword()">
                                             <i class="fa fa-eye-slash" id="toggleIcon"></i>
                                         </span>
                                     </div>
                                 </div>
-                                <button class="ml-[210px] mt-7 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                    Ubah dan Simpan
-                                </button>
+
+                                <div class="flex gap-1.5">
+                                    <button class="mt-7 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                        Keluar Akun
+                                    </button>
+
+                                    <button class="mt-7 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                        Ubah dan Simpan
+                                    </button>
+                                </div>
+
                             </form>
                         </div>
 
                     </div>
+
+                    <script>
+                        function togglePassword() {
+                            const passwordField = document.getElementById("password");
+                            const toggleIcon = document.getElementById("toggleIcon");
+
+                            if (passwordField.type === "password") {
+                                passwordField.type = "text";
+                                toggleIcon.classList.remove("fa-eye-slash");
+                                toggleIcon.classList.add("fa-eye");
+                            } else {
+                                passwordField.type = "password";
+                                toggleIcon.classList.remove("fa-eye");
+                                toggleIcon.classList.add("fa-eye-slash");
+                            }
+                        }
+
+                        function toggleNewPassword() {
+                            const passwordField = document.getElementById("newPassword");
+                            const toggleIcon = document.getElementById("toggleIcon");
+
+                            if (passwordField.type === "password") {
+                                passwordField.type = "text";
+                                toggleIcon.classList.remove("fa-eye-slash");
+                                toggleIcon.classList.add("fa-eye");
+                            } else {
+                                passwordField.type = "password";
+                                toggleIcon.classList.remove("fa-eye");
+                                toggleIcon.classList.add("fa-eye-slash");
+                            }
+                        }
+                    </script>
                 </section>
 
                 <section id="chart">

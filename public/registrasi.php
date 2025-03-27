@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
@@ -40,10 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
     </style>
 </head>
+
 <header class="flex items-center pl-7 pt-4 absolute">
     <img src="image/logo.png" alt="AksaraPeduli logo" class="h-16 ml-4">
 </header>
-
 
 <body class="bg-white">
     <div class="flex justify-center items-center min-h-screen gap-16 px-6 md:px-20 relative ">
@@ -56,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             </div>
 
             <!-- Google Sign Up Button -->
-            <button class="w-full flex items-center justify-center border border-gray-300 rounded-2xl py-2.5 px-4 hover:bg-gray-50 transition">
+            <button class="w-full flex items-center justify-center border border-gray-300 rounded-[20px] py-2.5 px-4 hover:bg-gray-50 transition">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Google Logo" class="w-5 h-5 mr-2">
                 <span class="text-sm">Daftar dengan Google</span>
             </button>
@@ -107,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <!-- Submit Button -->
                 <div class="flex w-full">
-                    <button type="submit" class="w-[47.5%] mx-auto text-sm py-3 bg-[#3874B3] text-white rounded-lg hover:bg-[#44c7ff] transition">
+                    <button type="submit" class="w-[47.5%] mx-auto text-sm py-3 bg-[#3874B3] text-white rounded-lg hover:bg-[#44c7ff] transition cursor-pointer">
                         Daftar
                     </button>
                 </div>
@@ -168,8 +167,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             return true;
         }
     </script>
-
-
 
     <script>
         function togglePassword() {

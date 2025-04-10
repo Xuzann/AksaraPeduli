@@ -1,39 +1,100 @@
 <?php
-session_start(); // Wajib untuk mengakses session
+session_start();
 include 'koneksi.php';
 
-// Periksa apakah pengguna sudah login
+// Periksa login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id']; // Ambil user_id dari session
-$nama = isset($_SESSION['nama']) ? $_SESSION['nama'] : "Guest";
+$user_id = $_SESSION['user_id'];
+$error = '';
+$success = '';
 
-// Gunakan prepared statement untuk keamanan
+// Proses form jika ada data dikirim
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nama = isset($_POST['nama']) ? trim($_POST['nama']) : null;
+    $email = isset($_POST['email']) ? trim($_POST['email']) : null;
+    $old_password = isset($_POST['oldPassword']) ? $_POST['oldPassword'] : null;
+    $new_password = isset($_POST['newPassword']) ? $_POST['newPassword'] : null;
+
+    // Validasi input
+    if (empty($nama) && empty($email) && empty($old_password) && empty($new_password)) {
+        $error = "Harap isi setidaknya satu field untuk diperbarui";
+    } elseif ((!empty($old_password) && empty($new_password)) || (empty($old_password) && !empty($new_password))) {
+        $error = "Untuk mengubah password, harap isi kedua field password lama dan baru";
+    } else {
+        // Ambil data user saat ini
+        $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        $stmt->close();
+
+        // Jika ada perubahan password, verifikasi password lama
+        if (!empty($old_password) && !empty($new_password)) {
+            if (!password_verify($old_password, $user['password'])) {
+                $error = "Password lama tidak sesuai";
+            } else {
+                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+            }
+        }
+
+        // Jika tidak ada error, lakukan update
+        if (empty($error)) {
+            $query = "UPDATE users SET ";
+            $params = array();
+            $types = '';
+
+            if (!empty($nama)) {
+                $query .= "nama = ?, ";
+                $params[] = $nama;
+                $types .= 's';
+                $_SESSION['nama'] = $nama; // Update session
+            }
+
+            if (!empty($email)) {
+                $query .= "email = ?, ";
+                $params[] = $email;
+                $types .= 's';
+            }
+
+            if (!empty($new_password)) {
+                $query .= "password = ?, ";
+                $params[] = $password_hash;
+                $types .= 's';
+            }
+
+            // Hapus koma terakhir
+            $query = rtrim($query, ", ");
+            $query .= " WHERE user_id = ?";
+            $params[] = $user_id;
+            $types .= 'i';
+
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param($types, ...$params);
+
+            $stmt->close();
+        }
+    }
+}
+
+// Ambil data user terbaru
 $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
 
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-} else {
-    echo "Data pengguna tidak ditemukan.";
-    exit();
-}
-
-// Perbaikan path gambar default
 $defaultImagePath = 'image/default_profile.png';
 $profileImageUrl = isset($user['profile_picture']) && !empty($user['profile_picture'])
     ? 'display_image.php?user_id=' . $user_id . '&t=' . time()
     : $defaultImagePath;
 
 $nama = $user['nama'] ?? 'Pengguna';
-
-$stmt->close();
-// Jangan close connection di sini karena mungkin dibutuhkan oleh script lain
 ?>
 
 <html lang="en" class="scroll-smooth">
@@ -50,6 +111,7 @@ $stmt->close();
     <link href="./src/output.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <title>
         Aksara Peduli
     </title>
@@ -240,26 +302,45 @@ $stmt->close();
 
         <section class="flex justify-between px-64">
             <section id="data diri">
-                <div class=" grid grid-cols-2">
+                <div class="grid grid-cols-2">
                     <div class="w-full">
                         <h3 class="text-lg font-semibold mb-2">Data diri</h3>
-                        <form action="" method="POST" onsubmit="return validateForm()" class="w-[360px]">
+
+                        <?php if (!empty($error)): ?>
+                            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+                                <?php echo htmlspecialchars($error); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($success)): ?>
+                            <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm">
+                                <?php echo htmlspecialchars($success); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="" method="POST" class="w-[360px]">
                             <div class="mb-4">
                                 <label class="block ml-3 font-medium text-gray-700 text-sm">Nama</label>
-                                <input type="text" class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan nama Anda">
+                                <input type="text" name="nama" value="<?php echo htmlspecialchars($user['nama'] ?? ''); ?>"
+                                    class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                    placeholder="Masukkan nama Anda">
                             </div>
 
                             <div class="mb-4">
                                 <label class="block ml-3 font-medium text-gray-700 text-sm">Email</label>
-                                <input type="email" class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan email Anda">
+                                <input type="email" name="email" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>"
+                                    class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                    placeholder="Masukkan email Anda">
                             </div>
 
                             <div class="mb-4">
                                 <label for="oldPassword" class="block ml-3 font-medium text-gray-700 text-sm mb-2">Kata Sandi Lama</label>
                                 <div class="relative">
-                                    <input type="password" id="oldPassword" name="oldPassword" placeholder="Masukkan kata sandi Anda"
-                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent">
-                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500" onclick="togglePassword('oldPassword', 'toggleOldPassword')">
+                                    <input type="password" id="oldPassword" name="oldPassword"
+                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                        placeholder="Masukkan kata sandi lama">
+                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                                        onclick="togglePassword('oldPassword', 'toggleOldPassword')">
                                         <i class="fa fa-eye-slash" id="toggleOldPassword"></i>
                                     </span>
                                 </div>
@@ -268,29 +349,59 @@ $stmt->close();
                             <div class="mb-4">
                                 <label for="newPassword" class="block ml-3 font-medium text-gray-700 text-sm mb-2">Kata Sandi Baru</label>
                                 <div class="relative">
-                                    <input type="password" id="newPassword" name="newPassword" placeholder="Masukkan kata sandi Anda"
-                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent">
-                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500" onclick="togglePassword('newPassword', 'toggleNewPassword')">
+                                    <input type="password" id="newPassword" name="newPassword"
+                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                        placeholder="Masukkan kata sandi baru">
+                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                                        onclick="togglePassword('newPassword', 'toggleNewPassword')">
                                         <i class="fa fa-eye-slash" id="toggleNewPassword"></i>
                                     </span>
                                 </div>
                             </div>
 
                             <div class="flex ml-[53px] gap-1.5">
-                                <button id="logoutButton" class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                <button type="button" id="logoutButton"
+                                    class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
                                     Keluar Akun
                                 </button>
 
-                                <button class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                <button type="submit"
+                                    class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
                                     Ubah dan Simpan
                                 </button>
                             </div>
-
                         </form>
                     </div>
-
                 </div>
                 <script>
+                    function validateForm() {
+                        const oldPassword = document.getElementById('oldPassword').value;
+                        const newPassword = document.getElementById('newPassword').value;
+
+                        // Jika salah satu field password diisi tapi tidak keduanya
+                        if ((oldPassword && !newPassword) || (!oldPassword && newPassword)) {
+                            alert('Untuk mengubah password, harap isi kedua field password lama dan baru');
+                            return false;
+                        }
+
+                        // Jika tidak ada field yang diisi sama sekali
+                        const nama = document.getElementsByName('nama')[0].value;
+                        const email = document.getElementsByName('email')[0].value;
+
+                        if (!nama && !email && !oldPassword && !newPassword) {
+                            alert('Harap isi setidaknya satu field untuk diperbarui');
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    // Tambahkan event listener untuk form submit
+                    document.querySelector('form').addEventListener('submit', function(e) {
+                        if (!validateForm()) {
+                            e.preventDefault();
+                        }
+                    });
                     function togglePassword(inputId, iconId) {
                         const passwordField = document.getElementById(inputId);
                         const toggleIcon = document.getElementById(iconId);
@@ -323,6 +434,9 @@ $stmt->close();
                 <div id="chart-container">
                     <canvas id="myLineChart"></canvas>
                 </div>
+                <button id="downloadPdf" class="ml-[290px] mt-2 mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                    Unduh Grafik
+                </button>
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
@@ -361,6 +475,17 @@ $stmt->close();
                                 });
                             })
                             .catch(error => console.error("Gagal mengambil data: ", error));
+                    });
+
+                    document.getElementById('downloadPdf').addEventListener('click', function() {
+                        const {
+                            jsPDF
+                        } = window.jspdf;
+                        const pdf = new jsPDF();
+                        const canvas = document.getElementById('myLineChart'); // mengambil elemen canvas
+                        const imgData = canvas.toDataURL('image/png'); // Konversi ke format PNG
+                        pdf.addImage(imgData, 'PNG', 10, 10, 180, 100); // menambahkan gambar ke pdf (gambar, format, x, y, lebar, tinggi)
+                        pdf.save('chart.pdf'); // unduh pdf
                     });
                 </script>
 

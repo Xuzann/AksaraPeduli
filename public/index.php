@@ -29,10 +29,10 @@
                 <a href="#"></a>
                 <img src="image/logo.png" class="h-[75px]" alt="Logo AksaraPeduli">
             </div>
-</nav>
-            <!-- Menu Navigasi -->
+        </div>
+    </nav>
+    <!-- Menu Navigasi -->
             <?php include "layout/header.html"; ?>
-            
 
     <main>
         <section id="hero"

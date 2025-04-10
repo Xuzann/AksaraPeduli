@@ -368,6 +368,7 @@ $stmt->close();
 
         </section>
     </main>
+    <?php include "layout/footer.html"; ?>
 </body>
 
 </html>

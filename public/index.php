@@ -29,34 +29,10 @@
                 <a href="#"></a>
                 <img src="image/logo.png" class="h-[75px]" alt="Logo AksaraPeduli">
             </div>
-
+</nav>
             <!-- Menu Navigasi -->
-            <div class="hidden md:flex items-center space-x-6">
-                <a href="#tentang" class="text-gray-700 hover:text-[#44c7ff]">Tentang</a>
-                <a href="#kegiatan" class="text-gray-700 hover:text-[#44c7ff]">Kegiatan</a>
-                <a href="#kontak" class="text-gray-700 hover:text-[#44c7ff]">Kontak</a>
-                <a href="donasiawal.php" class="px-5 py-3 bg-[#3874B3] rounded-md text-white relative font-semibold  hover:bg-[#44c7ff] transition-all duration-300 text-sm cursor-pointer">
-                    Mulai Donasi
-                </a>
-                <!-- Ikon Profil -->
-                <a href="profile.php">
-                    <button class="relative group">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700 hover:text-[#44c7ff] cursor-pointer "
-                            viewBox="0 0 24 24" fill="currentColor">
-                            <path
-                                d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" />
-                        </svg>
-
-                    </button>
-                </a>
-
-            </div>
-            <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-                ☰
-            </button>
-        </div>
-    </nav>
+            <?php include "layout/header.html"; ?>
+            
 
     <main>
         <section id="hero"

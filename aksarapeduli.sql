@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2025 at 10:36 AM
+-- Generation Time: Apr 10, 2025 at 02:05 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -70,12 +70,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `nama`, `email`, `password`, `profile_picture`, `created_at`) VALUES
-(1, 'farrel', 'farreleganr.825@gmail.com', '$2y$10$XopYcE35KziD1yjfzMgyBexO9rq/e5exOGmqB6uv61WwVYOa.nSg2', '', '2025-03-23 08:12:13'),
-(2, 'reno', 'gionandaa1234567890@gmail.com', '$2y$10$9Y1BY9.Gn4IKP42sLAi0Ye69YTTOUGn8xPEgHtA.Gd6RHmxOzBa7G', '', '2025-03-23 08:16:14'),
 (4, 'admin', 'admin@gmail.com', '$2y$10$pvO9wwg48nlBNqIiPfsIveVohwv8uJEjj3W36QtR./W.Zq8CvGY9K', 'profile_67e278ac9514e.jpg', '2025-03-23 08:22:06'),
-(5, 'ega', 'fenr@gmail.com', '$2y$10$QEPkO4TyZ03wWu.Sva9ia.TR4OHHXoMoBWh97eClzp4HIYtFdH86e', '', '2025-03-24 02:25:23'),
-(6, 'Farrel Ega', '23082010143@student.upnjatim.ac.id', '$2y$10$0PIN33K2plSZxNSD68wKuOfgLBoxCOtn3BlAKSoNxJAWkW5T8is0O', '', '2025-03-24 02:36:49'),
-(7, 'wahyu', '23082010142@student.upnjatim.ac.id', '$2y$10$u1m0eutN7jwIrjxS5vwelu/ggG02OtVn0ZhoXTOLo6EGCFF2whEbG', '', '2025-03-24 04:51:09');
+(8, 'Farrel Ega', '23082010143@student.upnjatim.ac.id', '$2y$10$mQmp.eSeFFvBOTmu14S9YeVYS1LHR2hJkwws/so8P6zabdmNy8ZvG', 'profile_67f51ed82e8d7.jpg', '2025-04-08 13:01:46'),
+(10, 'admin1', 'admin1@gmail.com', '$2y$10$DI61KnBS/Sck.sDgcC5H5.i6gCZ4f/m5mG4htpWBbI.y3Ch47I5wS', '', '2025-04-08 14:23:04');
 
 --
 -- Indexes for dumped tables
@@ -109,7 +106,7 @@ ALTER TABLE `donations`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Constraints for dumped tables

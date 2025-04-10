@@ -35,7 +35,7 @@
                 <a href="#tentang" class="text-gray-700 hover:text-[#44c7ff]">Tentang</a>
                 <a href="#kegiatan" class="text-gray-700 hover:text-[#44c7ff]">Kegiatan</a>
                 <a href="#kontak" class="text-gray-700 hover:text-[#44c7ff]">Kontak</a>
-                <a href="#" class="px-5 py-3 bg-[#3874B3] rounded-md text-white relative font-semibold  hover:bg-[#44c7ff] transition-all duration-300 text-sm cursor-pointer">
+                <a href="donasiawal.php" class="px-5 py-3 bg-[#3874B3] rounded-md text-white relative font-semibold  hover:bg-[#44c7ff] transition-all duration-300 text-sm cursor-pointer">
                     Mulai Donasi
                 </a>
                 <!-- Ikon Profil -->

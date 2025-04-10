@@ -19,9 +19,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $user['user_id'];
         $_SESSION['nama'] = $user['nama'];
         $_SESSION['email'] = $user['email'];
-
-        // Redirect ke halaman profile setelah login
-        header("Location: index.php");
+    
+        // Cek apakah email adalah admin
+        if ($user['email'] === 'admin1@gmail.com') {
+            header("Location: adminprofile.php");
+        } else {
+            header("Location: index.php");
+        }
+    
         exit();
     } else {
         $error_message = "Login gagal. Periksa email atau password!";

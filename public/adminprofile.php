@@ -1,39 +1,190 @@
 <?php
-session_start(); // Wajib untuk mengakses session
+session_start();
 include 'koneksi.php';
 
-// Periksa apakah pengguna sudah login
+// Periksa login
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit();
 }
 
-$user_id = $_SESSION['user_id']; // Ambil user_id dari session
-$nama = isset($_SESSION['nama']) ? $_SESSION['nama'] : "Guest";
+$user_id = $_SESSION['user_id'];
+$error = '';
+$success = '';
 
-// Gunakan prepared statement untuk keamanan
+// Proses form jika ada data dikirim
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
+    $nama = isset($_POST['nama']) ? trim($_POST['nama']) : null;
+    $email = isset($_POST['email']) ? trim($_POST['email']) : null;
+    $old_password = isset($_POST['oldPassword']) ? $_POST['oldPassword'] : null;
+    $new_password = isset($_POST['newPassword']) ? $_POST['newPassword'] : null;
+
+    if (empty($nama) && empty($email) && empty($old_password) && empty($new_password)) {
+        $error = "Harap isi setidaknya satu field untuk diperbarui";
+    } elseif ((!empty($old_password) && empty($new_password)) || (empty($old_password) && !empty($new_password))) {
+        $error = "Untuk mengubah password, harap isi kedua field password lama dan baru";
+    } else {
+        $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+        $stmt->close();
+
+        if (!empty($old_password) && !empty($new_password)) {
+            if (!password_verify($old_password, $user['password'])) {
+                $error = "Kata sandi lama tidak sesuai";
+            } else {
+                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            }
+        }
+
+        if (empty($error)) {
+            // Persiapkan bagian-bagian query yang berubah
+            $fields = [];
+            $params = [];
+            $types = "";
+
+            if (!empty($nama) && $nama !== $user['nama']) {
+                $fields[] = "nama = ?";
+                $params[] = $nama;
+                $types .= "s";
+            }
+
+            if (!empty($email) && $email !== $user['email']) {
+                $fields[] = "email = ?";
+                $params[] = $email;
+                $types .= "s";
+            }
+
+            if (!empty($new_password) && isset($hashed_password)) {
+                $fields[] = "password = ?";
+                $params[] = $hashed_password;
+                $types .= "s";
+            }
+
+            if (!empty($fields)) {
+                $query = "UPDATE users SET " . implode(", ", $fields) . " WHERE user_id = ?";
+                $params[] = $user_id;
+                $types .= "i";
+
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param($types, ...$params);
+
+                if ($stmt->execute()) {
+                    $success = "Data berhasil diperbarui.";
+                } else {
+                    $error = "Gagal memperbarui data. " . $stmt->error;
+                }
+
+                $stmt->close();
+            } else {
+                $error = "Tidak ada perubahan data yang dilakukan.";
+            }
+        }
+    }
+}
+
+// Ambil semua kampanye
+$campaigns = mysqli_query($conn, "SELECT * FROM campaigns ORDER BY created_at DESC");
+// Proses jika form kampanye disubmit
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Hapus kampanye
+    if (isset($_POST['hapus_kampanye']) && isset($_POST['campaign_id'])) {
+        $campaign_id = (int) $_POST['campaign_id'];
+        $stmt = $conn->prepare("DELETE FROM campaigns WHERE campaign_id = ?");
+        $stmt->bind_param("i", $campaign_id);
+        if ($stmt->execute()) {
+            echo "<script>alert('Kampanye berhasil dihapus.'); window.location.href='adminprofile.php';</script>";
+        } else {
+            echo "<script>alert('Gagal menghapus kampanye.');</script>";
+        }
+        $stmt->close();
+    }
+
+    // Edit kampanye
+    elseif (isset($_POST['edit_kampanye']) && isset($_POST['campaign_id'])) {
+        $campaign_id = (int) $_POST['campaign_id'];
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $updates = $_POST['updates'];
+        $target_amount = (int) $_POST['target_amount'];
+        $deadline = $_POST['deadline'];
+
+        // Cek apakah gambar diunggah
+        if (!empty($_FILES['image']['name'])) {
+            $image = $_FILES['image'];
+            $uploadDir = '../uploads/campaigns/';
+            if (!is_dir($uploadDir)) {
+                mkdir($uploadDir, 0777, true);
+            }
+            $imageName = uniqid() . '_' . basename($image['name']);
+            $uploadPath = $uploadDir . $imageName;
+            if (move_uploaded_file($image['tmp_name'], $uploadPath)) {
+                $stmt = $conn->prepare("UPDATE campaigns SET title=?, image=?, description=?, updates=?, target_amount=?, deadline=? WHERE campaign_id=?");
+                $stmt->bind_param("ssssisi", $title, $uploadPath, $description, $updates, $target_amount, $deadline, $campaign_id);
+            } else {
+                echo "<script>alert('Gagal mengunggah gambar.');</script>";
+                exit();
+            }
+        } else {
+            $stmt = $conn->prepare("UPDATE campaigns SET title=?, description=?, updates=?, target_amount=?, deadline=? WHERE campaign_id=?");
+            $stmt->bind_param("sssisi", $title, $description, $updates, $target_amount, $deadline, $campaign_id);
+        }
+
+        if ($stmt->execute()) {
+            echo "<script>alert('Kampanye berhasil diperbarui.'); window.location.href='adminprofile.php';</script>";
+        } else {
+            echo "<script>alert('Gagal memperbarui kampanye.');</script>";
+        }
+        $stmt->close();
+    }
+
+    // Tambah kampanye baru
+    elseif (isset($_POST['tambah_kampanye'])) {
+        $title = $_POST['title'];
+        $description = $_POST['description'];
+        $updates = $_POST['updates'];
+        $target_amount = (int) $_POST['target_amount'];
+        $deadline = $_POST['deadline'];
+
+        $image = $_FILES['image'];
+        $uploadDir = '../uploads/campaigns/';
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        $imageName = uniqid() . '_' . basename($image['name']);
+        $uploadPath = $uploadDir . $imageName;
+
+        if (move_uploaded_file($image['tmp_name'], $uploadPath)) {
+            $stmt = $conn->prepare("INSERT INTO campaigns (title, image, description, updates, target_amount, deadline, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())");
+            $stmt->bind_param("ssssis", $title, $uploadPath, $description, $updates, $target_amount, $deadline);
+            if ($stmt->execute()) {
+                echo "<script>alert('Kampanye berhasil ditambahkan!'); window.location.href='adminprofile.php';</script>";
+            } else {
+                echo "<script>alert('Gagal menambahkan kampanye.');</script>";
+            }
+            $stmt->close();
+        } else {
+            echo "<script>alert('Gagal mengunggah gambar kampanye.');</script>";
+        }
+    }
+}
+
+// Ambil data user terbaru
 $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
 
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-} else {
-    echo "Data pengguna tidak ditemukan.";
-    exit();
-}
-
-// Perbaikan path gambar default
 $defaultImagePath = 'image/default_profile.png';
 $profileImageUrl = isset($user['profile_picture']) && !empty($user['profile_picture'])
     ? 'display_image.php?user_id=' . $user_id . '&t=' . time()
     : $defaultImagePath;
 
 $nama = $user['nama'] ?? 'Pengguna';
-
-$stmt->close();
-// Jangan close connection di sini karena mungkin dibutuhkan oleh script lain
 ?>
 
 <html lang="en" class="scroll-smooth">
@@ -50,6 +201,7 @@ $stmt->close();
     <link href="./src/output.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <title>
         Aksara Peduli
     </title>
@@ -240,26 +392,45 @@ $stmt->close();
 
         <section class="flex justify-between px-64">
             <section id="data diri">
-                <div class=" grid grid-cols-2">
+                <div class="grid grid-cols-2">
                     <div class="w-full">
                         <h3 class="text-lg font-semibold mb-2">Data diri</h3>
-                        <form action="" method="POST" onsubmit="return validateForm()" class="w-[360px]">
+
+                        <?php if (!empty($error)): ?>
+                            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
+                                <?php echo htmlspecialchars($error); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <?php if (!empty($success)): ?>
+                            <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm">
+                                <?php echo htmlspecialchars($success); ?>
+                            </div>
+                        <?php endif; ?>
+
+                        <form action="" method="POST" class="w-[360px]">
                             <div class="mb-4">
                                 <label class="block ml-3 font-medium text-gray-700 text-sm">Nama</label>
-                                <input type="text" class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan nama Anda">
+                                <input type="text" name="nama" value="<?php echo htmlspecialchars($user['nama'] ?? ''); ?>"
+                                    class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                    placeholder="Masukkan nama Anda">
                             </div>
 
                             <div class="mb-4">
                                 <label class="block ml-3 font-medium text-gray-700 text-sm">Email</label>
-                                <input type="email" class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan email Anda">
+                                <input type="email" name="email" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>"
+                                    class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                    placeholder="Masukkan email Anda">
                             </div>
 
                             <div class="mb-4">
                                 <label for="oldPassword" class="block ml-3 font-medium text-gray-700 text-sm mb-2">Kata Sandi Lama</label>
                                 <div class="relative">
-                                    <input type="password" id="oldPassword" name="oldPassword" placeholder="Masukkan kata sandi Anda"
-                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent">
-                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500" onclick="togglePassword('oldPassword', 'toggleOldPassword')">
+                                    <input type="password" id="oldPassword" name="oldPassword"
+                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                        placeholder="Masukkan kata sandi lama">
+                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                                        onclick="togglePassword('oldPassword', 'toggleOldPassword')">
                                         <i class="fa fa-eye-slash" id="toggleOldPassword"></i>
                                     </span>
                                 </div>
@@ -268,29 +439,60 @@ $stmt->close();
                             <div class="mb-4">
                                 <label for="newPassword" class="block ml-3 font-medium text-gray-700 text-sm mb-2">Kata Sandi Baru</label>
                                 <div class="relative">
-                                    <input type="password" id="newPassword" name="newPassword" placeholder="Masukkan kata sandi Anda"
-                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent">
-                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500" onclick="togglePassword('newPassword', 'toggleNewPassword')">
+                                    <input type="password" id="newPassword" name="newPassword"
+                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                        placeholder="Masukkan kata sandi baru">
+                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
+                                        onclick="togglePassword('newPassword', 'toggleNewPassword')">
                                         <i class="fa fa-eye-slash" id="toggleNewPassword"></i>
                                     </span>
                                 </div>
                             </div>
 
                             <div class="flex ml-[53px] gap-1.5">
-                                <button id="logoutButton" class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                <button type="button" id="logoutButton"
+                                    class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
                                     Keluar Akun
                                 </button>
 
-                                <button class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                <button type="submit" name="update_profile"
+                                    class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
                                     Ubah dan Simpan
                                 </button>
                             </div>
-
                         </form>
                     </div>
-
                 </div>
                 <script>
+                    function validateForm() {
+                        const oldPassword = document.getElementById('oldPassword').value;
+                        const newPassword = document.getElementById('newPassword').value;
+
+                        // Jika salah satu field password diisi tapi tidak keduanya
+                        if ((oldPassword && !newPassword) || (!oldPassword && newPassword)) {
+                            alert('Untuk mengubah password, harap isi kedua field password lama dan baru');
+                            return false;
+                        }
+
+                        // Jika tidak ada field yang diisi sama sekali
+                        const nama = document.getElementsByName('nama')[0].value;
+                        const email = document.getElementsByName('email')[0].value;
+
+                        if (!nama && !email && !oldPassword && !newPassword) {
+                            alert('Harap isi setidaknya satu field untuk diperbarui');
+                            return false;
+                        }
+
+                        return true;
+                    }
+
+                    // Tambahkan event listener untuk form submit
+                    document.querySelector('form').addEventListener('submit', function(e) {
+                        if (!validateForm()) {
+                            e.preventDefault();
+                        }
+                    });
+
                     function togglePassword(inputId, iconId) {
                         const passwordField = document.getElementById(inputId);
                         const toggleIcon = document.getElementById(iconId);
@@ -318,15 +520,18 @@ $stmt->close();
             </section>
 
             <section id="chart">
-                <div class="text-lg font-semibold">Pencapaian Anda</div>
+                <div class="text-lg font-semibold">Tren Donasi</div>
 
                 <div id="chart-container">
                     <canvas id="myLineChart"></canvas>
                 </div>
+                <button id="downloadPdf" class="ml-[290px] mt-2 mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                    Unduh Grafik
+                </button>
 
                 <script>
                     document.addEventListener("DOMContentLoaded", function() {
-                        fetch("get_donations.php") // Ambil data dari PHP
+                        fetch("get_usersdonations.php") // Ambil data dari PHP
                             .then(response => response.json())
                             .then(data => {
                                 const ctx = document.getElementById('myLineChart').getContext('2d');
@@ -362,12 +567,113 @@ $stmt->close();
                             })
                             .catch(error => console.error("Gagal mengambil data: ", error));
                     });
-                </script>
 
+                    document.getElementById('downloadPdf').addEventListener('click', function() {
+                        const {
+                            jsPDF
+                        } = window.jspdf;
+                        const pdf = new jsPDF();
+                        const canvas = document.getElementById('myLineChart'); // mengambil elemen canvas
+                        const imgData = canvas.toDataURL('image/png'); // Konversi ke format PNG
+                        pdf.addImage(imgData, 'PNG', 10, 10, 180, 100); // menambahkan gambar ke pdf (gambar, format, x, y, lebar, tinggi)
+                        pdf.save('chart.pdf'); // unduh pdf
+                    });
+                </script>
+            </section>
+        </section>
+
+        <section class="flex flex-col md:flex-row gap-6 p-6 justify-between px-64">
+            <section class="grid grid-cols-2 w-full">
+                <div class=" mr-auto">
+                    <h3 class="text-lg font-semibold mb-2">Tambah Kampanye Donasi</h3>
+                    <form action="" method="POST" class="w-[480px]" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label for="title" class="form-label block ml-3 font-medium text-gray-700 text-sm">Judul Kampanye</label>
+                            <input type="text" id="title" name="title"
+                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                placeholder="Masukkan judul kampanye" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="image" class="form-label block ml-3 font-medium text-gray-700 text-sm">Gambar Kampanye</label>
+                            <input type="file" id="image" name="image" accept="image/*"
+                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                placeholder="Masukkan gambar kampanye" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="description" class="form-label block ml-3 font-medium text-gray-700 text-sm">Deskripsi</label>
+                            <textarea id="description" name="description" rows="4"
+                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                placeholder="Masukkan deskripsi kampanye" required></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="updates" class="form-label block ml-3 font-medium text-gray-700 text-sm">Kabar Terbaru</label>
+                            <textarea id="updates" name="updates" rows="3"
+                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                placeholder="Masukkan update kampanye"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="target_amount" class="form-label block ml-3 font-medium text-gray-700 text-sm">Target Donasi (Rp)</label>
+                            <input type="number" id="target_amount" name="target_amount"
+                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                placeholder="Masukkan target donasi" required>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="deadline" class="form-label block ml-3 font-medium text-gray-700 text-sm">Tanggal Berakhir</label>
+                            <input type="date" id="deadline" name="deadline"
+                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
+                                placeholder="Masukkan tanggal berakhir kampanye" required>
+                        </div>
+
+                        <div class="flex gap-1.5">
+                            <button type="submit" name="tambah_kampanye"
+                                class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                Buat
+                            </button>
+                            <button type="submit" name="edit_kampanye"
+                                class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                Ubah
+                            </button>
+                            <button type="submit" name="hapus_kampanye"
+                                class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                Hapus
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <!-- Daftar Kampanye -->
+                <div class="md:w-1/3 h-[700px] overflow-y-auto border rounded-xl shadow p-4">
+                    <h3 class="text-lg font-bold mb-4">Daftar Kampanye</h3>
+                    <?php while ($row = mysqli_fetch_assoc($campaigns)) : ?>
+                        <div
+                            onclick='isiFormKampanye(<?php echo json_encode($row); ?>)'
+                            class="cursor-pointer border p-4 mb-3 rounded-lg hover:bg-gray-100 transition">
+                            <h4 class="font-semibold text-blue-800"><?php echo htmlspecialchars($row['title']); ?></h4>
+                            <p class="text-sm text-gray-600">Target: Rp <?php echo number_format($row['target_amount'], 0, ',', '.'); ?></p>
+                            <p class="text-sm text-gray-500">Deadline: <?php echo date('d M Y', strtotime($row['deadline'])); ?></p>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+
+                <script>
+                    function isiFormKampanye(data) {
+                        document.getElementById('campaign_id').value = data.campaign_id;
+                        document.getElementById('title').value = data.title;
+                        document.getElementById('description').value = data.description;
+                        document.getElementById('updates').value = data.updates;
+                        document.getElementById('target_amount').value = data.target_amount;
+                        document.getElementById('deadline').value = data.deadline;
+                    }
+                </script>
             </section>
 
         </section>
     </main>
+    <?php include "layout/footer.html"; ?>
 </body>
 
 </html>

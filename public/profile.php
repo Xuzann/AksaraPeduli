@@ -19,13 +19,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old_password = isset($_POST['oldPassword']) ? $_POST['oldPassword'] : null;
     $new_password = isset($_POST['newPassword']) ? $_POST['newPassword'] : null;
 
-    // Validasi input
     if (empty($nama) && empty($email) && empty($old_password) && empty($new_password)) {
         $error = "Harap isi setidaknya satu field untuk diperbarui";
     } elseif ((!empty($old_password) && empty($new_password)) || (empty($old_password) && !empty($new_password))) {
         $error = "Untuk mengubah password, harap isi kedua field password lama dan baru";
     } else {
-        // Ambil data user saat ini
         $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
         $stmt->bind_param("i", $user_id);
         $stmt->execute();
@@ -33,53 +31,60 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
         $stmt->close();
 
-        // Jika ada perubahan password, verifikasi password lama
         if (!empty($old_password) && !empty($new_password)) {
             if (!password_verify($old_password, $user['password'])) {
-                $error = "Password lama tidak sesuai";
+                $error = "Kata sandi lama tidak sesuai";
             } else {
-                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
             }
         }
 
-        // Jika tidak ada error, lakukan update
         if (empty($error)) {
-            $query = "UPDATE users SET ";
-            $params = array();
-            $types = '';
+            // Persiapkan bagian-bagian query yang berubah
+            $fields = [];
+            $params = [];
+            $types = "";
 
-            if (!empty($nama)) {
-                $query .= "nama = ?, ";
+            if (!empty($nama) && $nama !== $user['nama']) {
+                $fields[] = "nama = ?";
                 $params[] = $nama;
-                $types .= 's';
-                $_SESSION['nama'] = $nama; // Update session
+                $types .= "s";
             }
 
-            if (!empty($email)) {
-                $query .= "email = ?, ";
+            if (!empty($email) && $email !== $user['email']) {
+                $fields[] = "email = ?";
                 $params[] = $email;
-                $types .= 's';
+                $types .= "s";
             }
 
-            if (!empty($new_password)) {
-                $query .= "password = ?, ";
-                $params[] = $password_hash;
-                $types .= 's';
+            if (!empty($new_password) && isset($hashed_password)) {
+                $fields[] = "password = ?";
+                $params[] = $hashed_password;
+                $types .= "s";
             }
 
-            // Hapus koma terakhir
-            $query = rtrim($query, ", ");
-            $query .= " WHERE user_id = ?";
-            $params[] = $user_id;
-            $types .= 'i';
+            if (!empty($fields)) {
+                $query = "UPDATE users SET " . implode(", ", $fields) . " WHERE user_id = ?";
+                $params[] = $user_id;
+                $types .= "i";
 
-            $stmt = $conn->prepare($query);
-            $stmt->bind_param($types, ...$params);
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param($types, ...$params);
 
-            $stmt->close();
+                if ($stmt->execute()) {
+                    $success = "Data berhasil diperbarui.";
+                } else {
+                    $error = "Gagal memperbarui data. " . $stmt->error;
+                }
+
+                $stmt->close();
+            } else {
+                $error = "Tidak ada perubahan data yang dilakukan.";
+            }
         }
     }
 }
+
 
 // Ambil data user terbaru
 $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");

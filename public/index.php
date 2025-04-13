@@ -1,3 +1,8 @@
+<?php
+session_start();
+include 'koneksi.php';
+?>
+
 <html lang="en" class="scroll-smooth">
 
 <head>
@@ -32,7 +37,7 @@
         </div>
     </nav>
     <!-- Menu Navigasi -->
-            <?php include "layout/header.html"; ?>
+    <?php include "layout/header.html"; ?>
 
     <main>
         <section id="hero"
@@ -56,32 +61,36 @@
                 <div class="justify-center gap-16 px-4 pb-5 z-30 hidden sm:hidden md:hidden lg:flex">
                     <div
                         class="relative w-[275px] h-[410px] rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
-                        <img loading="lazy" decoding="async" data-nimg="1"
-                            class="w-[275px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
-                            src="https://images.unsplash.com/photo-1640488065806-e3cf96865965?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="Perbaikan Sekolah SDN Tadika Mesra">
-                        <div class="p-3">
-                            <div class="mb-2 flex">
+                        <?php
+                        $query = mysqli_query($conn, "SELECT * FROM campaigns");
+                        while ($row = mysqli_fetch_assoc($query)) :
+                        ?>
+                            <img loading="lazy" decoding="async" data-nimg="1"
+                                class="img-fluid w-[275px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
+                                src="<?= $row['image'] ?>"
+                                alt="Perbaikan Sekolah SDN Tadika Mesra">
+                            <div class="p-3">
+                                <div class="mb-2 flex">
+                                    <span
+                                        class="inline-block overflow-hidden text-xs text-ellipsis whitespace-nowrap">Sumbawa</span>
+                                </div>
                                 <span
-                                    class="inline-block overflow-hidden text-xs text-ellipsis whitespace-nowrap">Sumbawa</span>
-                            </div>
-                            <span
-                                class="mb-3 block h-auto overflow-hidden break-words text-left font-semibold">Perbaikan
-                                Sekolah SDN Tadika Mesra</span>
-                            <div class="absolute bottom-16">
-                                <svg width="250px" height="5" aria-label="progressBar">
-                                    <rect x="0" rx="3" width="100%" height="100%" fill="#E8E8E8"></rect>
-                                    <rect x="0" rx="3" width="82%" height="100%" fill="#10A8E5"
-                                        aria-describedby="progress 80%"></rect>
-                                </svg>
-                                <div class="mt-[5px] flex">
-                                    <span class="text-sm font-semibold text-left">Rp 21.029.000</span>
+                                    class="mb-3 block h-auto overflow-hidden break-words text-left font-semibold"><?= $row['title'] ?></span>
+                                <div class="absolute bottom-16">
+                                    <svg width="250px" height="5" aria-label="progressBar">
+                                        <rect x="0" rx="3" width="100%" height="100%" fill="#E8E8E8"></rect>
+                                        <rect x="0" rx="3" width="82%" height="100%" fill="#10A8E5"
+                                            aria-describedby="progress 80%"></rect>
+                                    </svg>
+                                    <div class="mt-[5px] flex">
+                                        <span class="text-sm font-semibold text-left">Rp 21.029.000</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <button class="ml-36 mt-7 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                            Donasi
-                        </button>
+                            <a href="campaigns.php?id=<?= $row['campaign_id'] ?>" class="ml-36 mt-10 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                Donasi
+                            </a>
+                        <?php endwhile; ?>
                     </div>
 
                     <div
@@ -197,42 +206,42 @@
                         </div>
                     </div>
 
-                <div class="flex gap-8 pb-2">
-                    <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
-                        <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
-                        <div class="p-3">
-                            <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
-                                Bakti Kepada Sekolah Dasar Maluku Utara
-                            </span>
-                            <div class="mb-7 flex">
-                                <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
-                                <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
-                                <span class="text-xs font-light">01 Oktober 2025</span>
+                    <div class="flex gap-8 pb-2">
+                        <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
+                            <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
+                            <div class="p-3">
+                                <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
+                                    Bakti Kepada Sekolah Dasar Maluku Utara
+                                </span>
+                                <div class="mb-7 flex">
+                                    <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
+                                    <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
+                                    <span class="text-xs font-light">01 Oktober 2025</span>
+                                </div>
+                                <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                    Selengkapnya
+                                </button>
                             </div>
-                            <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                Selengkapnya
-                            </button>
                         </div>
-                    </div>
 
-                <div class="flex gap-8 pb-2">
-                    <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
-                        <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
-                        <div class="p-3">
-                            <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
-                                Bakti Kepada Sekolah Dasar Maluku Utara
-                            </span>
-                            <div class="mb-7 flex">
-                                <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
-                                <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
-                                <span class="text-xs font-light">01 Oktober 2025</span>
+                        <div class="flex gap-8 pb-2">
+                            <div class="relative w-[360px] h-[430px] flex-shrink-0 rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)]" data-testid="homepage-card-campaign-pilihan-kitabisa">
+                                <img src="image/image 5.png" alt="" loading="lazy" decoding="async" class="h-[260px] w-full rounded-tl-lg rounded-tr-lg" data-nimg="1" style="color: transparent">
+                                <div class="p-3">
+                                    <span class="mb-5 block h-9  break-words text-base font-semibold text-mineshaft">
+                                        Bakti Kepada Sekolah Dasar Maluku Utara
+                                    </span>
+                                    <div class="mb-7 flex">
+                                        <span class="mr-15 inline-block text-xs font-light text-mineshaft">AksaraPeduli - Volunteer</span>
+                                        <img src="image/calendar_2278049.png" alt="" loading="lazy" decoding="async" class="h-[16px] w-[16px] mr-2" data-nimg="1" style="color: transparent">
+                                        <span class="text-xs font-light">01 Oktober 2025</span>
+                                    </div>
+                                    <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                                        Selengkapnya
+                                    </button>
+                                </div>
                             </div>
-                            <button class="ml-52 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                Selengkapnya
-                            </button>
                         </div>
-                    </div>
-                </div>
         </section>
 
     </main>

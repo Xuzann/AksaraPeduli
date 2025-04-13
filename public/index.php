@@ -59,39 +59,36 @@ include 'koneksi.php';
             </div>
             <section id="sub-hero" class="container mx-auto w-full h-[500px] mt-16">
                 <div class="justify-center gap-16 px-4 pb-5 z-30 hidden sm:hidden md:hidden lg:flex">
-                    <div
-                        class="relative w-[275px] h-[410px] rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
+                    <div class="relative w-[275px] h-[410px] rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">
                         <?php
                         $query = mysqli_query($conn, "SELECT * FROM campaigns");
                         while ($row = mysqli_fetch_assoc($query)) :
                         ?>
                             <img loading="lazy" decoding="async" data-nimg="1"
-                                class="img-fluid w-[275px] h-[220px] rounded-tl-lg rounded-tr-lg " style="color: transparent;"
-                                src="<?= $row['image'] ?>"
-                                alt="Perbaikan Sekolah SDN Tadika Mesra">
-                            <div class="p-3">
+                                class="img-fluid w-[275px] h-[220px] rounded-tl-lg rounded-tr-lg" style="color: transparent;"
+                                src="<?= $row['image'] ?>" alt="<?= $row['title'] ?>">
+                            <div class="p-3 pb-16"> <!-- Tambahkan padding-bottom -->
                                 <div class="mb-2 flex">
-                                    <span
-                                        class="inline-block overflow-hidden text-xs text-ellipsis whitespace-nowrap">Sumbawa</span>
+                                    <span class="inline-block overflow-hidden text-xs text-ellipsis whitespace-nowrap">Sumbawa</span>
                                 </div>
-                                <span
-                                    class="mb-3 block h-auto overflow-hidden break-words text-left font-semibold"><?= $row['title'] ?></span>
-                                <div class="absolute bottom-16">
+                                <span class="mb-3 block h-auto overflow-hidden break-words text-left font-semibold"><?= $row['title'] ?></span>
+                                <div class="mt-2">
                                     <svg width="250px" height="5" aria-label="progressBar">
                                         <rect x="0" rx="3" width="100%" height="100%" fill="#E8E8E8"></rect>
-                                        <rect x="0" rx="3" width="82%" height="100%" fill="#10A8E5"
-                                            aria-describedby="progress 80%"></rect>
+                                        <rect x="0" rx="3" width="82%" height="100%" fill="#10A8E5" aria-describedby="progress 80%"></rect>
                                     </svg>
                                     <div class="mt-[5px] flex">
                                         <span class="text-sm font-semibold text-left">Rp 21.029.000</span>
                                     </div>
                                 </div>
                             </div>
-                            <a href="campaigns.php?id=<?= $row['campaign_id'] ?>" class="ml-36 mt-10 px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
+                            <a href="campaigns.php?id=<?= $row['campaign_id'] ?>"
+                                class="absolute bottom-4 right-6 px-5 py-3 bg-[#3874B3] rounded-xl text-white font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer shadow-md">
                                 Donasi
                             </a>
                         <?php endwhile; ?>
                     </div>
+
 
                     <div
                         class="relative w-[275px] h-[410px] rounded-2xl bg-white shadow-[0_2px_8px_rgba(152,152,152,0.5)] flex-none">

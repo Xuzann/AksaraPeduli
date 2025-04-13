@@ -584,91 +584,84 @@ $nama = $user['nama'] ?? 'Pengguna';
 
         <section class="flex flex-col md:flex-row gap-6 p-6 justify-between px-64">
             <section class="grid grid-cols-2 w-full">
-                <div class=" mr-auto">
-                    <h3 class="text-lg font-semibold mb-2">Tambah Kampanye Donasi</h3>
-                    <form action="" method="POST" class="w-[480px]" enctype="multipart/form-data">
-                        <div class="mb-4">
-                            <label for="title" class="form-label block ml-3 font-medium text-gray-700 text-sm">Judul Kampanye</label>
-                            <input type="text" id="title" name="title"
-                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                placeholder="Masukkan judul kampanye" required>
-                        </div>
+                <section>
+                    <div class=" mr-auto">
+                        <h3 class="text-lg font-semibold mb-2">Kampanye Donasi</h3>
+                        <form id="campaignForm" method="POST" enctype="multipart/form-data" class="w-[480px]">
+                            <input type="hidden" name="campaign_id" id="campaign_id" />
 
-                        <div class="mb-4">
-                            <label for="image" class="form-label block ml-3 font-medium text-gray-700 text-sm">Gambar Kampanye</label>
-                            <input type="file" id="image" name="image" accept="image/*"
-                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                placeholder="Masukkan gambar kampanye" required>
-                        </div>
+                            <div class="mb-4">
+                                <label class="form-label block ml-3 font-medium text-gray-700 text-sm">Judul Kampanye</label>
+                                <input type="text" name="title" id="title"
+                                    class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan judul kampanye" />
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="description" class="form-label block ml-3 font-medium text-gray-700 text-sm">Deskripsi</label>
-                            <textarea id="description" name="description" rows="4"
-                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                placeholder="Masukkan deskripsi kampanye" required></textarea>
-                        </div>
+                            <div class="mb-4">
+                                <label class="form-label block ml-3 font-medium text-gray-700 text-sm">Gambar Kampanye</label>
+                                <input type="file" name="image"
+                                    class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" />
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="updates" class="form-label block ml-3 font-medium text-gray-700 text-sm">Kabar Terbaru</label>
-                            <textarea id="updates" name="updates" rows="3"
-                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                placeholder="Masukkan update kampanye"></textarea>
-                        </div>
+                            <div class="mb-4">
+                                <label class="form-label block ml-3 font-medium text-gray-700 text-sm">Deskripsi</label>
+                                <textarea name="description" id="description" rows="4"
+                                    class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan deskripsi kampanye"></textarea>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="target_amount" class="form-label block ml-3 font-medium text-gray-700 text-sm">Target Donasi (Rp)</label>
-                            <input type="number" id="target_amount" name="target_amount"
-                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                placeholder="Masukkan target donasi" required>
-                        </div>
+                            <div class="mb-4">
+                                <label class="form-label block ml-3 font-medium text-gray-700 text-sm">Kabar Terbaru</label>
+                                <textarea name="updates" id="updates" rows="4"
+                                    class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan update kampanye"></textarea>
+                            </div>
 
-                        <div class="mb-4">
-                            <label for="deadline" class="form-label block ml-3 font-medium text-gray-700 text-sm">Tanggal Berakhir</label>
-                            <input type="date" id="deadline" name="deadline"
-                                class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                placeholder="Masukkan tanggal berakhir kampanye" required>
-                        </div>
+                            <div class="mb-4">
+                                <label class="form-label block ml-3 font-medium text-gray-700 text-sm">Target Donasi (Rp)</label>
+                                <input type="number" name="target_amount" id="target_amount"
+                                    class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" placeholder="Masukkan target donasi" />
+                            </div>
 
-                        <div class="flex gap-1.5">
-                            <button type="submit" name="tambah_kampanye"
-                                class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                Buat
-                            </button>
-                            <button type="submit" name="edit_kampanye"
-                                class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                Ubah
-                            </button>
-                            <button type="submit" name="hapus_kampanye"
-                                class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                Hapus
-                            </button>
-                        </div>
-                    </form>
-                </div>
+                            <div class="mb-4">
+                                <label class="form-label block ml-3 font-medium text-gray-700 text-sm">Tanggal Berakhir</label>
+                                <input type="date" name="deadline" id="deadline"
+                                    class="form-control w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent" />
+                            </div>
+
+                            <div class="flex gap-1.5">
+                                <button type="submit" name="tambah_kampanye" class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">Buat</button>
+                                <button type="submit" name="edit_kampanye" class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">Ubah</button>
+                                <button type="submit" name="hapus_kampanye" class="ml-auto mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">Hapus</button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="text-lg font-semibold mb-2">Daftar Kampanye</h3>
+                    <div class="w-full overflow-y-auto border rounded-xl shadow p-4">
+                        <?php while ($row = mysqli_fetch_assoc($campaigns)) : ?>
+                            <div
+                                onclick='isiFormKampanye(<?php echo json_encode($row); ?>)'
+                                class="cursor-pointer border p-4 mb-3 rounded-lg hover:bg-gray-100 transition">
+                                <h4 class="text-base text-[#3874B3] font-semibold"><?php echo htmlspecialchars($row['title']); ?></h4>
+                                <p class="text-sm text-gray-600">Target: Rp <?php echo number_format($row['target_amount'], 0, ',', '.'); ?></p>
+                                <p class="text-sm text-gray-500">Deadline: <?php echo date('d M Y', strtotime($row['deadline'])); ?></p>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
+
+                    <script>
+                        function isiFormKampanye(data) {
+                            document.getElementById('campaign_id').value = data.campaign_id;
+                            document.getElementById('title').value = data.title;
+                            document.getElementById('description').value = data.description;
+                            document.getElementById('updates').value = data.updates;
+                            document.getElementById('target_amount').value = data.target_amount;
+                            document.getElementById('deadline').value = data.deadline;
+                        }
+                    </script>
+                </section>
                 <!-- Daftar Kampanye -->
-                <div class="md:w-1/3 h-[700px] overflow-y-auto border rounded-xl shadow p-4">
-                    <h3 class="text-lg font-bold mb-4">Daftar Kampanye</h3>
-                    <?php while ($row = mysqli_fetch_assoc($campaigns)) : ?>
-                        <div
-                            onclick='isiFormKampanye(<?php echo json_encode($row); ?>)'
-                            class="cursor-pointer border p-4 mb-3 rounded-lg hover:bg-gray-100 transition">
-                            <h4 class="font-semibold text-blue-800"><?php echo htmlspecialchars($row['title']); ?></h4>
-                            <p class="text-sm text-gray-600">Target: Rp <?php echo number_format($row['target_amount'], 0, ',', '.'); ?></p>
-                            <p class="text-sm text-gray-500">Deadline: <?php echo date('d M Y', strtotime($row['deadline'])); ?></p>
-                        </div>
-                    <?php endwhile; ?>
-                </div>
 
-                <script>
-                    function isiFormKampanye(data) {
-                        document.getElementById('campaign_id').value = data.campaign_id;
-                        document.getElementById('title').value = data.title;
-                        document.getElementById('description').value = data.description;
-                        document.getElementById('updates').value = data.updates;
-                        document.getElementById('target_amount').value = data.target_amount;
-                        document.getElementById('deadline').value = data.deadline;
-                    }
-                </script>
             </section>
 
         </section>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2025 at 10:36 AM
+-- Generation Time: Apr 14, 2025 at 06:23 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `campaigns`
+--
+
+CREATE TABLE `campaigns` (
+  `campaign_id` int(11) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `image` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `updates` text DEFAULT NULL,
+  `target_amount` bigint(20) DEFAULT NULL,
+  `deadline` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `campaigns`
+--
+
+INSERT INTO `campaigns` (`campaign_id`, `title`, `image`, `description`, `updates`, `target_amount`, `deadline`, `created_at`) VALUES
+(2, 'Perbaikan Sekolah SDN Tadika Mesra', '../uploads/campaigns/67fb64094ade2_sekolah.jpg', 'Ruang kelas bocor, dinding retak, tapi semangat anak-anak SDN Tadika Mesra tak pernah padam. Bantu mereka mendapat tempat belajar yang layak. Sekecil apa pun donasimu, besar artinya bagi masa depan mereka.', 'Sebanyak 50 set meja dan kursi telah berhasil dipesan dan saat ini tengah dalam proses pengiriman. Diperkirakan akan tiba di lokasi dalam dua minggu ke depan. Kehadiran sarana ini sangat dinanti-nanti, karena sebelumnya para siswa harus belajar tanpa tempat duduk yang layak.', 30000000, '2025-07-01', '2025-04-13 07:13:13');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `donations`
 --
 
@@ -31,24 +55,36 @@ CREATE TABLE `donations` (
   `donation_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `amount` decimal(10,2) NOT NULL,
-  `donation_date` timestamp NOT NULL DEFAULT current_timestamp()
+  `payment_method` varchar(10) NOT NULL,
+  `donation_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `campaign_id` int(11) DEFAULT NULL,
+  `review_text` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `donations`
 --
 
-INSERT INTO `donations` (`donation_id`, `user_id`, `amount`, `donation_date`) VALUES
-(1, 4, 50000.00, '2024-01-09 17:00:00'),
-(2, 4, 75000.00, '2024-02-14 17:00:00'),
-(3, 4, 30000.00, '2024-02-27 17:00:00'),
-(4, 4, 100000.00, '2024-03-04 17:00:00'),
-(5, 4, 25000.00, '2024-04-19 17:00:00'),
-(6, 4, 60000.00, '2024-05-11 17:00:00'),
-(7, 4, 90000.00, '2024-06-24 17:00:00'),
-(8, 4, 120000.00, '2024-07-06 17:00:00'),
-(9, 4, 35000.00, '2024-08-18 17:00:00'),
-(10, 4, 40000.00, '2024-09-29 17:00:00');
+INSERT INTO `donations` (`donation_id`, `user_id`, `amount`, `payment_method`, `donation_date`, `campaign_id`, `review_text`) VALUES
+(11, 8, 50000.00, '', '2025-03-01 02:00:00', 2, NULL),
+(12, 8, 75000.00, '', '2025-04-05 03:30:00', 2, NULL),
+(13, 8, 100000.00, '', '2025-05-08 04:45:00', 2, NULL),
+(14, 8, 25000.00, '', '2025-06-12 01:15:00', 2, NULL),
+(15, 8, 120000.00, '', '2025-07-15 06:00:00', 2, NULL),
+(16, 8, 30000.00, '', '2025-08-18 07:20:00', 2, NULL),
+(17, 8, 45000.00, '', '2025-03-20 02:50:00', 2, NULL),
+(18, 8, 95000.00, '', '2025-04-22 03:10:00', 2, NULL),
+(19, 8, 150000.00, '', '2025-05-25 08:30:00', 2, NULL),
+(20, 8, 60000.00, '', '2025-06-27 00:45:00', 2, NULL),
+(21, 8, 85000.00, '', '2025-07-29 05:00:00', 2, NULL),
+(22, 8, 20000.00, '', '2025-08-01 03:10:00', 2, NULL),
+(23, 8, 105000.00, '', '2025-04-03 04:15:00', 2, NULL),
+(24, 8, 40000.00, '', '2025-05-06 06:45:00', 2, NULL),
+(25, 8, 70000.00, '', '2025-06-08 02:30:00', 2, NULL),
+(26, 8, 1000000.00, 'shopeepay', '2025-04-13 13:07:18', 2, 'Semoga membantu'),
+(28, 8, 1500000.00, 'ovo', '2025-04-13 13:08:01', 2, 'keren banget'),
+(30, 8, 10000000.00, 'gopay', '2025-04-13 13:12:58', 2, 'Semoga amanah'),
+(31, 11, 20000000.00, 'debit', '2025-04-13 13:21:28', 2, 'Semoga membantu ya');
 
 -- --------------------------------------------------------
 
@@ -61,7 +97,7 @@ CREATE TABLE `users` (
   `nama` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `profile_picture` varchar(255) NOT NULL,
+  `profile_picture` blob NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -70,23 +106,27 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `nama`, `email`, `password`, `profile_picture`, `created_at`) VALUES
-(1, 'farrel', 'farreleganr.825@gmail.com', '$2y$10$XopYcE35KziD1yjfzMgyBexO9rq/e5exOGmqB6uv61WwVYOa.nSg2', '', '2025-03-23 08:12:13'),
-(2, 'reno', 'gionandaa1234567890@gmail.com', '$2y$10$9Y1BY9.Gn4IKP42sLAi0Ye69YTTOUGn8xPEgHtA.Gd6RHmxOzBa7G', '', '2025-03-23 08:16:14'),
-(4, 'admin', 'admin@gmail.com', '$2y$10$pvO9wwg48nlBNqIiPfsIveVohwv8uJEjj3W36QtR./W.Zq8CvGY9K', 'profile_67e278ac9514e.jpg', '2025-03-23 08:22:06'),
-(5, 'ega', 'fenr@gmail.com', '$2y$10$QEPkO4TyZ03wWu.Sva9ia.TR4OHHXoMoBWh97eClzp4HIYtFdH86e', '', '2025-03-24 02:25:23'),
-(6, 'Farrel Ega', '23082010143@student.upnjatim.ac.id', '$2y$10$0PIN33K2plSZxNSD68wKuOfgLBoxCOtn3BlAKSoNxJAWkW5T8is0O', '', '2025-03-24 02:36:49'),
-(7, 'wahyu', '23082010142@student.upnjatim.ac.id', '$2y$10$u1m0eutN7jwIrjxS5vwelu/ggG02OtVn0ZhoXTOLo6EGCFF2whEbG', '', '2025-03-24 04:51:09');
+(8, 'Farrel', '23082010143@student.upnjatim.ac.id', '$2y$10$DaJOIWJ3Bp6sH81acP5QUeK4YBKk2TrmEIXx8jNFBSZoRnVhhPDRu', 0x70726f66696c655f363766623535623335356363312e6a7067, '2025-04-08 13:01:46'),
+(10, 'admin1', 'admin1@gmail.com', '$2y$10$DI61KnBS/Sck.sDgcC5H5.i6gCZ4f/m5mG4htpWBbI.y3Ch47I5wS', '', '2025-04-08 14:23:04'),
+(11, 'wahyu', '23082010142@student.upnjatim.ac.id', '$2y$10$Oq6GBoz/nzv25AoEq/oDFOO/Js2fdRfRiyX8ilhKYoLVkEAPgz1KK', 0x70726f66696c655f363766626239666365636361342e6a7067, '2025-04-13 13:19:15');
 
 --
 -- Indexes for dumped tables
 --
 
 --
+-- Indexes for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  ADD PRIMARY KEY (`campaign_id`);
+
+--
 -- Indexes for table `donations`
 --
 ALTER TABLE `donations`
   ADD PRIMARY KEY (`donation_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `campaign_id` (`campaign_id`);
 
 --
 -- Indexes for table `users`
@@ -100,16 +140,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `campaigns`
+--
+ALTER TABLE `campaigns`
+  MODIFY `campaign_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `donations`
 --
 ALTER TABLE `donations`
-  MODIFY `donation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `donation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -119,7 +165,8 @@ ALTER TABLE `users`
 -- Constraints for table `donations`
 --
 ALTER TABLE `donations`
-  ADD CONSTRAINT `donations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `donations_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `donations_ibfk_2` FOREIGN KEY (`campaign_id`) REFERENCES `campaigns` (`campaign_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

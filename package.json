@@ -1,26 +1,16 @@
 {
-  "name": "aksarapeduli",
-  "version": "1.0.0",
-  "description": "halaman web",
-  "homepage": "https://github.com/Xuzann/AksaraPeduli#readme",
-  "bugs": {
-    "url": "https://github.com/Xuzann/AksaraPeduli/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Xuzann/AksaraPeduli.git"
-  },
-  "license": "ISC",
-  "author": "way",
-  "type": "commonjs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev" : "npx @tailwindcss/cli -i ./src/input.css -o ./public/src/output.css --watch"
-
-  },
-  "dependencies": {
-    "@tailwindcss/cli": "^4.0.12",
-    "tailwindcss": "^4.0.12"
-  }
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite"
+    },
+    "devDependencies": {
+        "@tailwindcss/vite": "^4.0.0",
+        "axios": "^1.8.2",
+        "concurrently": "^9.0.1",
+        "laravel-vite-plugin": "^1.2.0",
+        "tailwindcss": "^4.0.0",
+        "vite": "^6.2.4"
+    }
 }

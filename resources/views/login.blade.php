@@ -60,9 +60,9 @@
                 <hr class="flex-grow border-[0.5px] rounded-[1px] border-b-gray-300">
             </div>
 
-            <?php if (isset($error_message)): ?>
-                <p class="text-red-600 text-sm text-center mb-3"><?php echo $error_message; ?></p>
-            <?php endif; ?>
+            @if (session('error'))
+                <p class="text-red-600 text-sm text-center mb-3">{{ session('error') }}</p>
+            @endif
 
             <!-- Registration Form -->
             <form action="login.php" method="POST" onsubmit="return validateForm()">

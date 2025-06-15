@@ -1,37 +1,31 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function showRegistrationForm()
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
-
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user) {
-            return redirect('login')->with('error', 'Email tidak ditemukan.');
-        }
-
-        if (Hash::check($request->password, $user->password)) {
-            Session::put('user_id', $user->id);
-            Session::put('user_name', $user->name);
-            return redirect('/home');
-        } else {
-            return redirect('login')->with('error', 'Password salah.');
-        }
+        return view('register.registrasi');
     }
 
-    public function logout() {}
+    public function register(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nama' => 'required|max:255',
+            'email' => 'required|email:dns|unique:users',
+            'password' => 'required|min:5|max:255'
+        ]);
 
-    public function register(Request $request) {}
+        // Hash password dan set default role sebagai 'user'
+        $validatedData['password'] = Hash::make($validatedData['password']);
+        $validatedData['role'] = 'user'; // Default role untuk registrasi baru
+
+        User::create($validatedData);
+
+        return redirect('/login')->with('success', 'Registrasi berhasil! Silakan login.');
+    }
 }

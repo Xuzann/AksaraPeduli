@@ -1,401 +1,372 @@
-<!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+@extends('layouts.main')
 
-<head>
-    <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-        rel="stylesheet">
-    <link href="./src/output.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <title>
-        Aksara Peduli
-    </title>
-    <style>
-        body {
-            font-family: 'poppins';
-        }
+@section('container')
 
-        #chart-container {
-            width: 100%;
-            width: 450px;
-            height: 350px;
-        }
+<body class="bg-gray-50 font-[poppins]">
+    <main class="pt-24 pb-16 min-h-screen">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 
-        #profilePopup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            /* Warna hitam transparan */
-            backdrop-filter: blur(5px);
-            /* Efek blur */
-            justify-content: center;
-            align-items: center;
-        }
-    </style>
-    <script></script>
-</head>
+            <!-- Page Header -->
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-gray-900">Profil Saya</h1>
+                <p class="text-gray-600 mt-2">Kelola informasi profil dan lihat statistik donasi Anda</p>
+            </div>
 
-<body class="bg-white font-[poppins]">
-    <header>
-        <nav class="bg-white shadow-md relative w-full z-10">
-            <div class="max-w-7xl mx-auto px-6 flex justify-between items-center h-16">
-                <!-- Logo -->
-                <div class="flex ">
-                    <a href="#"></a>
-                    <img src="image/logo.png" class="h-[75px]" alt="Logo AksaraPeduli">
+            <!-- Alert Messages -->
+            @if (session('success'))
+            <div class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4">
+                <div class="flex items-center">
+                    <svg class="w-5 h-5 text-green-600 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <p class="text-green-800 font-medium">{{ session('success') }}</p>
                 </div>
+            </div>
+            @endif
 
-                <!-- Menu Navigasi -->
-                <div class="hidden md:flex items-center space-x-6">
-                    <a href="index.php" class="text-gray-700 hover:text-[#44c7ff]">Beranda</a>
-                    <a href="#tentang" class="text-gray-700 hover:text-[#44c7ff]">Tentang</a>
-                    <a href="#kegiatan" class="text-gray-700 hover:text-[#44c7ff]">Kegiatan</a>
-                    <a href="#kontak" class="text-gray-700 hover:text-[#44c7ff]">Kontak</a>
-                    <a href="#" class="px-5 py-3 bg-[#3874B3] rounded-md text-white relative font-semibold  hover:bg-[#44c7ff] transition-all duration-300 text-sm cursor-pointer">
-                        Mulai Donasi
-                    </a>
-                    <!-- Ikon Profil -->
-                    <a href="profile.php">
-                        <button class="relative group">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gray-700 hover:text-[#44c7ff] cursor-pointer"
-                                viewBox="0 0 24 24" fill="currentColor">
-                                <path
-                                    d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z" />
+            @if (session()->has('error'))
+            <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="flex items-start">
+                    <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <p class="text-red-800 font-medium">Terjadi kesalahan:</p>
+                        <p class="text-red-700 text-sm mt-1">{{ session('error') }}</p>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            @if (session()->has('loginError'))
+            <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="flex items-start">
+                    <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <p class="text-red-800 font-medium">Terjadi kesalahan:</p>
+                        <p class="text-red-700 text-sm mt-1">{{ session('loginError') }}</p>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            @if ($errors->any())
+            <div class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+                <div class="flex items-start">
+                    <svg class="w-5 h-5 text-red-600 mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                    <div>
+                        <p class="text-red-800 font-medium">Terjadi kesalahan input:</p>
+                        <ul class="text-red-700 text-sm mt-1 space-y-1">
+                            @foreach ($errors->all() as $error)
+                            <li>• {{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            @endif
+
+            <!-- Main Content Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <!-- Left Column - Profile Info & Form -->
+                <div class="lg:col-span-2 space-y-6">
+
+                    <!-- Profile Card -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+                        <div class="bg-[#3874B3] px-6 py-8">
+                            <div class="flex items-center space-x-4">
+                                <div class="relative">
+                                    <img id="profileImage"
+                                        src="{{ $user->image ? asset($user->image) : asset('images/default-avatar.png') }}"
+                                        alt="Foto Profil"
+                                        class="w-20 h-20 rounded-full border-4 border-white shadow-lg object-cover">
+                                    <div class="absolute bottom-0 right-0 bg-white rounded-full p-1 shadow-lg">
+                                        <svg class="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="text-white">
+                                    <h2 class="text-2xl font-bold">{{ $user->nama ?? 'Nama Pengguna' }}</h2>
+                                    <p class="text-blue-100 text-sm">{{ $user->email ?? 'email@example.com' }}</p>
+                                    <div class="flex items-center mt-2">
+                                        <svg class="w-4 h-4 text-green-400 mr-1" fill="currentColor"
+                                            viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                        <span class="text-green-400 text-sm font-medium">Akun Terverifikasi</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Edit Profile Form -->
+                    <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                        <div class="flex items-center mb-6">
+                            <svg class="w-5 h-5 text-gray-600 mr-2" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z">
+                                </path>
                             </svg>
-
-                        </button>
-                    </a>
-
-                </div>
-                <!-- Mobile Menu Button -->
-                <button id="menu-btn" class="md:hidden text-gray-700 focus:outline-none">
-                    ☰
-                </button>
-            </div>
-        </nav>
-    </header>
-
-    <main class=" mt-[35px]">
-        <section id="profile-picture" class="mb-5">
-            <div class="flex flex-col justify-center items-center">
-                <img id="profileImage" class="w-32 h-32 object-cover rounded-full bg-gray-300 cursor-pointer hover:opacity-90 transition-opacity"
-                    src="<?php echo htmlspecialchars($profileImageUrl); ?>" alt="Profile Picture"
-                    onerror="this.src='<?php echo htmlspecialchars($defaultImagePath); ?>'">
-                <h2 class="text-2xl font-semibold mt-4"><?php echo htmlspecialchars($nama); ?></h2>
-            </div>
-
-            <!-- Popup Modal -->
-            <div id="profilePopup" class="hidden fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-                <div class="relative bg-white rounded-lg p-6 w-full max-w-md shadow-xl transform transition-all">
-                    <h3 class="text-xl font-semibold mb-4">Ubah Foto Profil</h3>
-
-                    <form id="uploadForm" method="POST" enctype="multipart/form-data" action="upload.php">
-                        <div class="mb-4">
-                            <label class="block text-sm font-medium text-gray-700 mb-2">Unggah foto baru</label>
-                            <input type="file" name="profileUpload" id="profileUpload" accept="image/*" class="block w-full text-sm text-gray-500
-                                file:mr-4 file:py-2 file:px-4
-                                file:rounded-md file:border-0
-                                file:text-sm file:font-semibold
-                                file:bg-blue-50 file:text-blue-700
-                                hover:file:bg-blue-100 cursor-pointer" required>
+                            <h3 class="text-lg font-semibold text-gray-900">Edit Profil</h3>
                         </div>
 
-                        <div class="flex justify-end space-x-3">
-                            <button type="button" id="cancelPopup" class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 duration-300 cursor-pointer">
-                                Batal
-                            </button>
-                            <button type="submit" id="saveButton" class="px-4 py-2 text-sm font-medium text-white bg-[#3874B3] rounded-md hover:bg-[#44c7ff] duration-300 cursor-pointer">
-                                Simpan
-                            </button>
-                        </div>
-                    </form>
+                        <form action="{{ route('profile.update', Auth::user()->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('put')
 
-                    <button id="closePopup" class="absolute top-3 right-3 text-gray-400 hover:text-gray-500">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                const profileImage = document.getElementById('profileImage');
-                const profilePopup = document.getElementById('profilePopup');
-                const closePopup = document.getElementById('closePopup');
-                const cancelPopup = document.getElementById('cancelPopup');
-                const uploadForm = document.getElementById('uploadForm');
-                const profileUpload = document.getElementById('profileUpload');
-                const saveButton = document.getElementById('saveButton');
-
-                profileImage.addEventListener('click', function() {
-                    profilePopup.classList.remove('hidden');
-                    document.body.style.overflow = 'hidden';
-                });
-
-                function closeModal() {
-                    profilePopup.classList.add('hidden');
-                    document.body.style.overflow = '';
-                }
-
-                closePopup.addEventListener('click', closeModal);
-                cancelPopup.addEventListener('click', closeModal);
-                profilePopup.addEventListener('click', function(e) {
-                    if (e.target === profilePopup) {
-                        closeModal();
-                    }
-                });
-
-                uploadForm.addEventListener('submit', function(e) {
-                    e.preventDefault();
-
-                    if (!profileUpload.files.length) {
-                        alert('Silakan pilih gambar terlebih dahulu!');
-                        return;
-                    }
-
-                    let formData = new FormData(uploadForm);
-                    saveButton.disabled = true;
-                    saveButton.innerText = 'Mengunggah...';
-
-                    fetch('upload.php', {
-                            method: 'POST',
-                            body: formData
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                return response.json().then(err => {
-                                    throw err;
-                                });
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                // Tambahkan timestamp untuk menghindari cache
-                                profileImage.src = data.imageUrl + '&t=' + new Date().getTime();
-                                closeModal();
-                            } else {
-                                throw new Error(data.error || 'Gagal mengunggah gambar');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Terjadi kesalahan: ' + error.message);
-                        })
-                        .finally(() => {
-                            saveButton.disabled = false;
-                            saveButton.innerText = 'Simpan';
-                        });
-                });
-            });
-        </script>
-
-        <section class="flex justify-between px-64">
-            <section id="data diri">
-                <div class="grid grid-cols-2">
-                    <div class="w-full">
-                        <h3 class="text-lg font-semibold mb-2">Data diri</h3>
-
-                        <?php if (!empty($error)): ?>
-                            <div class="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">
-                                <?php echo htmlspecialchars($error); ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <?php if (!empty($success)): ?>
-                            <div class="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm">
-                                <?php echo htmlspecialchars($success); ?>
-                            </div>
-                        <?php endif; ?>
-
-                        <form action="" method="POST" class="w-[360px]">
-                            <div class="mb-4">
-                                <label class="block ml-3 font-medium text-gray-700 text-sm">Nama</label>
-                                <input type="text" name="nama" value="<?php echo htmlspecialchars($user['nama'] ?? ''); ?>"
-                                    class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                    placeholder="Masukkan nama Anda">
-                            </div>
-
-                            <div class="mb-4">
-                                <label class="block ml-3 font-medium text-gray-700 text-sm">Email</label>
-                                <input type="email" name="email" value="<?php echo htmlspecialchars($user['email'] ?? ''); ?>"
-                                    class="w-full border text-sm border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                    placeholder="Masukkan email Anda">
-                            </div>
-
-                            <div class="mb-4">
-                                <label for="oldPassword" class="block ml-3 font-medium text-gray-700 text-sm mb-2">Kata Sandi Lama</label>
-                                <div class="relative">
-                                    <input type="password" id="oldPassword" name="oldPassword"
-                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                        placeholder="Masukkan kata sandi lama">
-                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-                                        onclick="togglePassword('oldPassword', 'toggleOldPassword')">
-                                        <i class="fa fa-eye-slash" id="toggleOldPassword"></i>
-                                    </span>
+                            <!-- Profile Image Upload -->
+                            <div class="mb-6">
+                                <label for="image" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Foto Profil
+                                </label>
+                                <div class="flex items-center space-x-4">
+                                    <div class="relative">
+                                        <img id="imagePreview"
+                                            src="{{ $user->image ? asset($user->image) : asset('images/default-avatar.png') }}"
+                                            alt="Preview" class="w-16 h-16 rounded-full object-cover border-2 border-gray-300">
+                                    </div>
+                                    <div class="flex-1">
+                                        <input type="file" id="image" name="image" onchange="previewImage(this)"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent transition-all duration-200"
+                                            accept="image/jpeg,image/png,image/jpg,image/gif,image/webp">
+                                        <p class="text-xs text-gray-500 mt-1">Format: JPG, PNG, GIF, WEBP. Maksimal 5MB.</p>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="mb-4">
-                                <label for="newPassword" class="block ml-3 font-medium text-gray-700 text-sm mb-2">Kata Sandi Baru</label>
-                                <div class="relative">
-                                    <input type="password" id="newPassword" name="newPassword"
-                                        class="w-full px-4 py-2.5 border border-gray-300 text-sm rounded-lg focus:outline-none focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent"
-                                        placeholder="Masukkan kata sandi baru">
-                                    <span class="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500"
-                                        onclick="togglePassword('newPassword', 'toggleNewPassword')">
-                                        <i class="fa fa-eye-slash" id="toggleNewPassword"></i>
-                                    </span>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                <div>
+                                    <label for="nama" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Nama Lengkap
+                                    </label>
+                                    <input type="text" id="nama" name="nama"
+                                        value="{{ old('nama', $user->nama) }}"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent transition-all duration-200">
+                                </div>
+
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                        Email
+                                    </label>
+                                    <input type="email" id="email" name="email"
+                                        value="{{ old('email', $user->email) }}"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent transition-all duration-200">
                                 </div>
                             </div>
 
-                            <div class="flex ml-[53px] gap-1.5">
-                                <button type="button" id="logoutButton"
-                                    class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                    Keluar Akun
-                                </button>
+                            <div class="border-t border-gray-200 pt-5 mt-5">
+                                <h4 class="text-sm font-medium text-gray-900 mb-4">Ubah Kata Sandi</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <label for="current_password"
+                                            class="block text-sm font-medium text-gray-700 mb-2">
+                                            Kata Sandi Saat Ini
+                                        </label>
+                                        <input type="password" id="current_password" name="current_password"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent transition-all duration-200"
+                                            placeholder="Masukkan kata sandi saat ini">
+                                    </div>
 
+                                    <div>
+                                        <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                                            Kata Sandi Baru
+                                        </label>
+                                        <input type="password" id="password" name="password"
+                                            class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#44c7ff] focus:border-transparent transition-all duration-200"
+                                            placeholder="Masukkan kata sandi baru (opsional)">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end pt-5 border-t border-gray-200 mt-5">
                                 <button type="submit"
-                                    class="mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                                    Ubah dan Simpan
+                                    class="px-6 py-3 bg-[#3874B3] text-white rounded-lg hover:bg-[#44c7ff] focus:ring-2 focus:ring-[#44c7ff] focus:ring-offset-2 transition-all duration-200 font-medium">
+                                    <svg class="w-4 h-4 inline mr-2" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    Simpan Perubahan
                                 </button>
                             </div>
                         </form>
                     </div>
+
+                    <!-- Logout Form -->
+                    <form action="/logout" method="POST" class="flex items-center justify-end">
+                        @csrf
+                        <button type="submit"
+                            class="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all duration-200 font-medium">
+                            Keluar
+                        </button>
+                    </form>
                 </div>
-                <script>
-                    function validateForm() {
-                        const oldPassword = document.getElementById('oldPassword').value;
-                        const newPassword = document.getElementById('newPassword').value;
 
-                        // Jika salah satu field password diisi tapi tidak keduanya
-                        if ((oldPassword && !newPassword) || (!oldPassword && newPassword)) {
-                            alert('Untuk mengubah password, harap isi kedua field password lama dan baru');
-                            return false;
-                        }
+                <!-- Right Column - Statistics -->
+                <div class="space-y-6">
+                    <!-- Charts Section -->
+                    <div class="space-y-6">
+                        <!-- Daily Donations Chart -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Donasi Harian</h3>
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="h-48">
+                                <canvas id="dailySalesChart"></canvas>
+                            </div>
+                        </div>
 
-                        // Jika tidak ada field yang diisi sama sekali
-                        const nama = document.getElementsByName('nama')[0].value;
-                        const email = document.getElementsByName('email')[0].value;
-
-                        if (!nama && !email && !oldPassword && !newPassword) {
-                            alert('Harap isi setidaknya satu field untuk diperbarui');
-                            return false;
-                        }
-
-                        return true;
-                    }
-
-                    // Tambahkan event listener untuk form submit
-                    document.querySelector('form').addEventListener('submit', function(e) {
-                        if (!validateForm()) {
-                            e.preventDefault();
-                        }
-                    });
-                    function togglePassword(inputId, iconId) {
-                        const passwordField = document.getElementById(inputId);
-                        const toggleIcon = document.getElementById(iconId);
-
-                        if (passwordField.type === "password") {
-                            passwordField.type = "text";
-                            toggleIcon.classList.remove("fa-eye-slash");
-                            toggleIcon.classList.add("fa-eye");
-                        } else {
-                            passwordField.type = "password";
-                            toggleIcon.classList.remove("fa-eye");
-                            toggleIcon.classList.add("fa-eye-slash");
-                        }
-                    }
-                    document.getElementById("logoutButton").addEventListener("click", function() {
-                        fetch("logout.php")
-                            .then(response => {
-                                if (response.ok) {
-                                    window.location.href = "index.php"; // Redirect setelah logout
-                                }
-                            })
-                            .catch(error => console.error("Logout error:", error));
-                    });
-                </script>
-            </section>
-
-            <section id="chart">
-                <div class="text-lg font-semibold">Pencapaian Anda</div>
-
-                <div id="chart-container">
-                    <canvas id="myLineChart"></canvas>
+                        <!-- Payment Method Chart -->
+                        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-semibold text-gray-900">Metode Pembayaran</h3>
+                                <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="h-48">
+                                <canvas id="paymentMethodSalesChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <button id="downloadPdf" class="ml-[290px] mt-2 mb-7 w-[150px] px-5 z-1 py-3 bg-[#3874B3] rounded-xl text-white bottom-4 left-[95.5px] font-medium hover:bg-[#44c7ff] duration-300 text-xs cursor-pointer">
-                    Unduh Grafik
-                </button>
-
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        fetch("get_donations.php") // Ambil data dari PHP
-                            .then(response => response.json())
-                            .then(data => {
-                                const ctx = document.getElementById('myLineChart').getContext('2d');
-                                new Chart(ctx, {
-                                    type: 'line',
-                                    data: {
-                                        labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
-                                        datasets: [{
-                                            label: 'Jumlah Donasi per Bulan',
-                                            data: data, // Data dari PHP
-                                            borderColor: 'rgba(75, 192, 192, 1)',
-                                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                            borderWidth: 2,
-                                            tension: 0.1
-                                        }]
-                                    },
-                                    options: {
-                                        responsive: true,
-                                        maintainAspectRatio: false,
-                                        scales: {
-                                            x: {
-                                                beginAtZero: true,
-                                            },
-                                            y: {
-                                                beginAtZero: true,
-                                                ticks: {
-                                                    stepSize: 1 // Pastikan hanya angka bulat
-                                                }
-                                            }
-                                        }
-                                    }
-                                });
-                            })
-                            .catch(error => console.error("Gagal mengambil data: ", error));
-                    });
-
-                    document.getElementById('downloadPdf').addEventListener('click', function() {
-                        const {
-                            jsPDF
-                        } = window.jspdf;
-                        const pdf = new jsPDF();
-                        const canvas = document.getElementById('myLineChart'); // mengambil elemen canvas
-                        const imgData = canvas.toDataURL('image/png'); // Konversi ke format PNG
-                        pdf.addImage(imgData, 'PNG', 10, 10, 180, 100); // menambahkan gambar ke pdf (gambar, format, x, y, lebar, tinggi)
-                        pdf.save('chart.pdf'); // unduh pdf
-                    });
-                </script>
-
-            </section>
-
-        </section>
+            </div>
+        </div>
     </main>
-    <?php include "layout/footer.html"; ?>
-</body>
 
-</html>
+    <script>
+        const chartData = @json($chart_data);
+
+        // Daily Sales Chart
+        const dailySalesCtx = document.getElementById('dailySalesChart').getContext('2d');
+        new Chart(dailySalesCtx, {
+            type: 'line',
+            data: {
+                labels: chartData.daily_sales.labels,
+                datasets: [{
+                    label: 'Total Donasi Per Hari',
+                    data: chartData.daily_sales.data,
+                    borderColor: '#44c7ff',
+                    backgroundColor: '#9ed9f2',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#44c7ff',
+                    pointBorderColor: '#ffffff',
+                    pointBorderWidth: 2,
+                    pointRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#6b7280'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#f3f4f6'
+                        },
+                        ticks: {
+                            color: '#6b7280',
+                            callback: function(value) {
+                                return 'Rp ' + value.toLocaleString('id-ID');
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Payment Method Chart
+        const paymentMethodSalesCtx = document.getElementById('paymentMethodSalesChart').getContext('2d');
+        new Chart(paymentMethodSalesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: chartData.payment_method_sales.labels,
+                datasets: [{
+                    data: chartData.payment_method_sales.data,
+                    backgroundColor: [
+                        '#1dbafd',
+                        '#44c7ff',
+                        '#59c8f7',
+                        '#7cd8ff',
+                        '#9ed9f2',
+                        '#b3e5fa'
+                    ],
+                    borderWidth: 0,
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            padding: 20,
+                            usePointStyle: true,
+                            color: '#6b7280',
+                            font: {
+                                size: 12
+                            }
+                        }
+                    }
+                },
+                cutout: '60%'
+            }
+        });
+
+        // Image preview function
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                    document.getElementById('profileImage').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+    </script>
+</body>
+@endsection

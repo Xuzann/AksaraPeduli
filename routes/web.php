@@ -2,63 +2,52 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\CampaignController;
+use App\Http\Controllers\DonationController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AdminController;
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', [HomeController::class, 'index']);
 
-Route::get('/index', function () {
-    return view('index');
-});
+Route::get('/registrasi', [AuthController::class, 'showRegistrationForm']);
+Route::post('/registrasi', [AuthController::class, 'register']);
 
-// AUTH ROUTES
-Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login.form');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout']);
 
-Route::get('/registrasi', function () {
-    return view('registrasi');
-});
+// Public routes - dapat diakses tanpa login
+Route::get('/campaigns', [CampaignController::class, 'index'])->name('campaigns.index');
 
-// USER ROUTES
-Route::get('/profile', function () {
-    return view('profile');
-});
-
-Route::get('/adminprofile', function () {
-    return view('adminprofile');
-});
-
-Route::get('/campaigns', function () {
-    return view('campaigns');
-});
-
-Route::get('/display_image', function () {
-    return view('display_image');
-});
-
-Route::get('/get_donations', function () {
-    return view('get_donations');
-});
-
-Route::get('/get_usersdonations', function () {
-    return view('get_usersdonation');
-});
-
-Route::get('/hapusakun', function () {
-    return view('hapusakun');
-});
-
-// ROUTES YANG HARUSNYA DIHANDLE DENGAN METHOD POST ATAU CONTROLLER
-Route::post('/proseslogin', [AuthController::class, 'login']); // Optional jika login manual
-Route::post('/prosestambahuser', function () {
-    // Tambahkan logika simpan user baru
-});
-
-Route::post('/upload-profile', [UserController::class, 'uploadProfileImage'])->name('profile.upload');
-Route::get('/display-image/{user_id}', [UserController::class, 'getProfileImage'])->name('profile.image');
-
-Route::get('/upload', function () {
-    return view('upload');
+// Semua route yang memerlukan authentication
+Route::middleware(['auth'])->group(function () {
+    // Admin routes - menggunakan resource controller
+    Route::prefix('admin')->name('admin.')->group(function () {
+        Route::get('/dashboard', [AdminController::class, 'index'])->name('dashboard');
+        Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('edit');
+        Route::put('/{admin}', [AdminController::class, 'update'])->name('update');
+        
+        // Campaign management routes
+        Route::post('/campaign/create', [AdminController::class, 'createCampaign'])->name('campaign.create');
+        Route::post('/campaign/update', [AdminController::class, 'updateCampaign'])->name('campaign.update');
+        Route::post('/campaign/delete', [AdminController::class, 'deleteCampaign'])->name('campaign.delete');
+        
+        // Route lainnya untuk CRUD yang akan ditambahkan nanti
+        Route::get('/create', [AdminController::class, 'create'])->name('create');
+        Route::post('/', [AdminController::class, 'store'])->name('store');
+        Route::get('/{admin}', [AdminController::class, 'show'])->name('show');
+        Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('destroy');
+    });
+    
+    // Profile routes
+    Route::resource('profile', ProfileController::class);
+    
+    // Campaign routes (yang memerlukan login)
+    Route::get('/campaigns/{campaign}', [CampaignController::class, 'show'])->name('campaigns.show');
+    
+    // Donation routes
+    Route::resource('donations', DonationController::class);
+    Route::post('/donasi', [DonationController::class, 'store'])->name('donasi.store');
 });
